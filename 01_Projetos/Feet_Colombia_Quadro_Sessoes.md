@@ -76,7 +76,7 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 ### Onda 4 — Comercial / Front REP (out → dez)
 | ID | Entrega | Modelo | Depende | Status |
 |---|---|---|---|---|
-| S4.1 | Roteiro de validação com REPs + consolidação dos achados | Haiku 4.5 | merge da PR #1228 | ⏸️ |
+| S4.1 | Merge autorizado da PR #1228 + roteiro de validação com REPs | Haiku 4.5 | autorização do merge (dada 10/08) | 🚀 10/08 |
 | S4.2 | Quick wins "Now" do estudo + bug #593 (timeline Facturado) | Sonnet 5 | S4.1 | 📋 |
 | S4.3 | Financeiro no front (saldo/limite/comprovante) | Sonnet 5 | S1.4 | 📋 |
 | S4.4 | Vitrine Infinita: ajustes endless aisle | Sonnet 5 | S4.2 | 📋 |
@@ -91,3 +91,4 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 
 ## 🔄 Log de coordenação
 - **10/08** — Quadro criado; leva 1 lançada: S0.1 (Opus), S0.2 (Sonnet), S0.4 (Haiku). Aguardando de Bruno: exemplo de radicado (S0.5), merge PR #1228 (S4.1), dados de venda (S0.3), capacidade de trilhas.
+- **10/08 (2)** — Respostas do Bruno processadas: **(1) Radicado** solicitado por ele; pedidos de informação passarão a rodar pelo Slack (grupo IA) — conectores Slack e Asana ainda não instalados no org, sugestão de instalação enviada; até conectar, a coordenadora não alcança o Slack. **(2) Merge #1228** autorizado → delegado à S4.1 (a coordenadora é limitada ao owner brunosilvamedeiros; a S4.1 nasce no repo do produto e mergeia como primeiro passo). **(3) Vendas históricas** podem estar no Asana — verificação pendente do conector; vendas B2B atuais entram 100% pelo Medusa, então a S0.3 rodará com dados do Medusa assim que a S0.2 entregar, e o histórico do Asana entra como validação. **(4) Capacidade**: decisão da coordenadora — **2 trilhas paralelas com limite de WIP de ~3 PRs abertas** aguardando merge (o gargalo real é a revisão do Bruno, não as sessões). S4.1 lançada (Haiku).
