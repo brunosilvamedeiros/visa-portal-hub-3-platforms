@@ -72,7 +72,7 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 ### Onda 3 — Contábil (out)
 | ID | Entrega | Modelo | Depende | Status |
 |---|---|---|---|---|
-| S3.1 | Módulo `invoicing`: fila "pendentes de fatura" + notificações (evento mockável) | Sonnet 5 | S0.1 | 📋 |
+| S3.1 | Módulo `invoicing`: fila "pendentes de fatura" + notificações + **simulador de separação p/ staging** | Sonnet 5 | ✅ S0.1 | 🚀 10/08 |
 | S3.2 | Registro de fatura: upload doc + radicado + `fatura.registrada` | Sonnet 5 | S3.1, S0.5 | 📋 |
 | S3.3 | Notas crédito/débito de devoluções | Haiku 4.5 | S3.2, S2.8 | 📋 |
 
@@ -94,6 +94,12 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 
 ## 🔄 Log de coordenação
 - **10/08** — Quadro criado; leva 1 lançada: S0.1 (Opus), S0.2 (Sonnet), S0.4 (Haiku). Aguardando de Bruno: exemplo de radicado (S0.5), merge PR #1228 (S4.1), dados de venda (S0.3), capacidade de trilhas.
+- **10/08 (16)** — Decisão do Bruno: **bodegas atuais ("European Warehouse") valem para staging**; validação das bodegas reais vira **checklist pré-produção** (item 1 do checklist abaixo). **S3.1 lançada** (Sonnet): fila "Pedidos a Faturar" + notificação + simulador de `pedido.separado` para staging — próxima peça testável do fluxo contábil.
+
+## ✅ Checklist pré-produção (itens que NÃO bloqueiam staging)
+1. Substituir "European Warehouse" pelas bodegas reais (nomes/cidades com o Bruno) e migrar níveis de estoque — antes do go-live.
+2. Desativar/ocultar simuladores e ferramentas de teste (ex.: "Simular pedido separado") em produção.
+
 - **10/08 (15)** — **Primeiro teste do Bruno em staging** (pedido #119, modo vendedor): ✔ reservas criadas no pedido; ✔ liberação no rechazo do pedido testado; ✘ **reserva presa** no SKU `1185-702-5881-15745-5199-8-B` (a investigar: bug × pedido antigo); ✘ reservas sem "ID de pedido" visível; ✘ location é **"European Warehouse"** (default de seed — bodegas reais pendentes). → **S2.1b lançada** (Sonnet): investigação + fix da liberação + vínculo reserva↔pedido + dry-run de órfãs + bodegas reais. **Achados de contexto**: staging já tem extensão **"Aprobación de cartera"** (aprovação/rechazo com motivo, ex.: mora) e extensões Aprobaciones/Leads/Comentarios — a Onda 1 (wallet) deve construir o ledger POR BAIXO dessa aprovação existente, não duplicá-la; storefront mayorista já opera modo vendedor com pedido em nome do cliente e modelo caja/curva vivo.
 - **10/08 (14)** — Bruno autorizou a **#1234** e pediu para testar em staging → **MR-4 despachada**: merge + comentário na PR com "o que foi implementado / como testar" (extraído do `FUNDACAO_ESTOQUE.md`) + verificação de build. Primeiro "pode testar em staging" do roadmap em andamento.
 - **10/08 (13)** — Check-in: **#1233 mergeada** (MR-3, arquivada) — spec do registro de fatura viva em staging. **S2.1 entregou a primeira PR de CÓDIGO do roadmap: #1234** (fundação de estoque, 1.405 testes verdes, doc com roteiro de validação) → aguardando autorização do Bruno; após merge + build verde, disparar o primeiro "pode testar em staging". S1.0 (spec carteira) e S1.1 (wallet core) rodando. Asana segue oscilando — extração e S0.3 re-agendadas para o próximo check-in (23:01 UTC), com fallback: S0.3 via dados do Medusa.
