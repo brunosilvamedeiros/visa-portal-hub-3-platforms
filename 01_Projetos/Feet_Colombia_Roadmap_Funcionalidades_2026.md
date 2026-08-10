@@ -117,6 +117,9 @@ Devolução aprovada → nota crédito no sistema terceiro → upload + radicado
 
 *Aposentadorias desta onda: a **3.1** mata o aviso manual de "pode faturar" (Asana/WhatsApp); a **3.2** mata a planilha de controle fatura ↔ pedido — o vínculo passa a viver no próprio pedido, com documento + radicado.*
 
+> [!NOTE]
+> **Confirmado 10/08**: o sistema terceiro é o **Oasis** — faturas seguem manuais lá, como hoje, e sobem na plataforma para auditoria e acompanhamento. Em paralelo roda a implantação do **Odoo** (entrega prevista até dez/2026; migração Oasis → Odoo em 2027). O contrato `fatura.registrada` **não muda com a troca de emissor** — a integração direta com o Odoo (registro automático) entra futuramente como provider da 3.2, sem retrabalho no fluxo.
+
 ## 🌊 Onda 4 — Comercial / Front do REP *(discovery imediato · implementação a partir de out)*
 
 | Etapa | Entrega |
@@ -177,6 +180,7 @@ Devolução aprovada → nota crédito no sistema terceiro → upload + radicado
 | 3 | ~~Estudo do REP não acessível~~ **Resolvido 10/08**: estudo publicado (PR #1228 + protótipo) | — | mergear a PR e agendar a validação com REPs |
 | 3b | Cutover da cobrança (Oasis/planilha → ledger) mal executado | saldos errados no estado de conta | carga inicial validada item a item com o financeiro + dupla checagem ≤ 2 semanas + dono da conciliação |
 | 3c | Convivência prolongada com controles paralelos (dupla digitação) | time volta para a planilha e a plataforma perde a verdade | data de aposentadoria por marco + desligamento formal (planilha arquivada, board encerrado, acesso somente-leitura) |
+| 3d | Projeto Odoo rodando em paralelo no Q4 (entrega dez/2026) compete pela agenda do financeiro/contábil durante nosso piloto e rollout | atraso em M3/M4 | zero dependência do Odoo em 2026 (Oasis manual + upload); coordenar janelas de treinamento das duas iniciativas |
 | 4 | Legenda do mapa (amarelo = prioridade?) | priorização | validar com o time |
 | 5 | Capacidade do time (2 trilhas = 2 devs/squads) | cronograma | confirmar alocação; com 1 dev, seguir ordem 1→2→3→4 estrita |
 | 6 | Gate contábil como gargalo (pedido parado esperando fatura) | SLA de entrega | SLA de faturamento + alerta de fila parada (3.1) |

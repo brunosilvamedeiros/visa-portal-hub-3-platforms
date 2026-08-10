@@ -1,0 +1,93 @@
+---
+id: proj-feet-01-sessoes
+cliente: Feet Colombia
+titulo: Quadro de Sessões — Execução do Roadmap 2026
+status: Em Execucao
+gerente: Bruno
+coordenadora: session_01N2HTXDVaGku5z29N3sSJAJ (Roadmap de funcionalidades fim de ano)
+repo_produto: https://github.com/Sants-M13/Medusa (base: staging)
+data_inicio: 2026-08-10
+tags: [feet-colombia, sessoes, orquestracao, roadmap-2026]
+---
+
+# Quadro de Sessões — Execução do Roadmap 2026
+
+Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia_Roadmap_Funcionalidades_2026.md): **pequenas entregas coordenadas, 1 sessão = 1 entrega mergeável**, cada uma com o modelo adequado à complexidade.
+
+## 🎛️ Como funciona
+
+1. **Coordenadora**: esta sessão (`session_01N2HTXDVaGku5z29N3sSJAJ`) cria as sessões de trabalho com o modelo certo, acompanha o andamento (check-ins periódicos), integra os resultados ao roadmap e despacha a leva seguinte quando dependências fecham.
+2. **Contrato de entrega de cada sessão**: branch própria `claude/<slug>` a partir de `staging` → PR pequena para `staging` (specs = doc-only; builds = código + testes) → **merge é do Bruno** → memória `wip-<id>` → resumo de 5 linhas para a coordenadora (send_message, quando disponível).
+3. **Paralelismo sem conflito**: specs doc-only rodam em paralelo à vontade; **nunca duas sessões no mesmo módulo/pasta**; contratos entre ondas vêm da spec S0.1 (estados + eventos).
+4. **Etiquetas**: sessões nascem com tags `feet-2026`, `fase-0|onda-1|…` e `feet-sessao:<id>`.
+
+## 🧠 Guia de modelos por complexidade
+
+| Modelo | Uso | Exemplos |
+|---|---|---|
+| **Opus 5** (`claude-opus-5`) | Arquitetura, contratos estruturantes, decisões caras de reverter | S0.1 estados/eventos, S0.3 caixa×pares, S2.3 spec fulfillment-ops, plano do cutover |
+| **Sonnet 5** (`claude-sonnet-5`) | Desenvolvimento padrão de módulos, features e investigações | módulos wallet/invoicing/fulfillment-ops, auditoria, fronts |
+| **Haiku 4.5** (`claude-haiku-4-5-20251001`) | Mecânico bem especificado | inventários, templates de notificação, relatórios simples, roteiros |
+| **Fable 5** (esta sessão) | Coordenação, planejamento, integração dos achados | roadmap, quadro, despacho |
+
+## 📋 Quadro de entregas
+
+**Status**: 🚀 lançada · 📋 na fila · ⏸️ aguardando insumo · ✅ mergeada
+
+### Fase 0 — Contratos e Modelagem (ago S3)
+| ID | Entrega (PR pequena) | Modelo | Depende | Status |
+|---|---|---|---|---|
+| S0.1 | Spec: máquina de estados + catálogo de eventos (`docs/specs/pedidos/ESTADOS_E_EVENTOS.md`) | Opus 5 | — | 🚀 10/08 |
+| S0.2 | Auditoria Medusa v2 em produção (`docs/specs/AUDITORIA_MEDUSA_V2.md`, read-only) | Sonnet 5 | — | 🚀 10/08 |
+| S0.3 | Decisão caixa × pares (ADR com dados reais de venda) | Opus 5 | S0.2 + dados de venda | 📋 |
+| S0.4 | Inventário de controles paralelos (planilhas/Asana → onda → marco) | Haiku 4.5 | — | 🚀 10/08 |
+| S0.5 | Spec do registro de fatura: campos, radicado, validações | Haiku 4.5 | exemplo real do Oasis (Bruno) | ⏸️ |
+
+### Onda 1 — Carteira (ago S4 → set)
+| ID | Entrega | Modelo | Depende | Status |
+|---|---|---|---|---|
+| S1.1 | Módulo `wallet`: entidades do ledger + serviços + testes | Sonnet 5 | S0.1 | 📋 |
+| S1.2 | Estado de conta no admin: extrato, saldo, aging, export | Sonnet 5 | S1.1 | 📋 |
+| S1.3 | Comprovantes: upload → fila de conciliação → baixa | Sonnet 5 | S1.1 | 📋 |
+| S1.4 | Límite de crédito + gate no checkout + API saldo/limite | Sonnet 5 | S1.1 | 📋 |
+| S1.5 | Cutover da cobrança: plano (Opus) + carga inicial e validação (Sonnet) | Opus → Sonnet | S1.1, S0.4 | 📋 |
+| S1.6 | Alertas de vencimento / notificações | Haiku 4.5 | S1.2 | 📋 |
+
+### Onda 2 — Logística (set → nov)
+| ID | Entrega | Modelo | Depende | Status |
+|---|---|---|---|---|
+| S2.1 | Config estoque nativo: locations, níveis, reservas | Sonnet 5 | S0.2 | 📋 |
+| S2.2 | Cadastro/grades + import (modelagem aplicada) | Sonnet 5 | S0.3 | 📋 |
+| S2.3 | Spec das telas do fulfillment-ops (fila → pick → pack) | Opus 5 | S0.1 | 📋 |
+| S2.4 | Build: fila + verificar + preparar | Sonnet 5 | S2.3 | 📋 |
+| S2.5 | Build: pick/pack por operador + estado "Separado" + evento | Sonnet 5 | S2.4 | 📋 |
+| S2.6 | Gate de expedição (consome `fatura.registrada`) | Sonnet 5 | S0.1 | 📋 |
+| S2.7 | Movimentações + documento de transferência | Sonnet 5 | S2.1 | 📋 |
+| S2.8 | Devoluções & garantias (Returns/Claims + política) | Sonnet 5 | S2.5 | 📋 |
+| S2.9 | Relatórios operacionais | Haiku 4.5 | S2.5 | 📋 |
+
+### Onda 3 — Contábil (out)
+| ID | Entrega | Modelo | Depende | Status |
+|---|---|---|---|---|
+| S3.1 | Módulo `invoicing`: fila "pendentes de fatura" + notificações (evento mockável) | Sonnet 5 | S0.1 | 📋 |
+| S3.2 | Registro de fatura: upload doc + radicado + `fatura.registrada` | Sonnet 5 | S3.1, S0.5 | 📋 |
+| S3.3 | Notas crédito/débito de devoluções | Haiku 4.5 | S3.2, S2.8 | 📋 |
+
+### Onda 4 — Comercial / Front REP (out → dez)
+| ID | Entrega | Modelo | Depende | Status |
+|---|---|---|---|---|
+| S4.1 | Roteiro de validação com REPs + consolidação dos achados | Haiku 4.5 | merge da PR #1228 | ⏸️ |
+| S4.2 | Quick wins "Now" do estudo + bug #593 (timeline Facturado) | Sonnet 5 | S4.1 | 📋 |
+| S4.3 | Financeiro no front (saldo/limite/comprovante) | Sonnet 5 | S1.4 | 📋 |
+| S4.4 | Vitrine Infinita: ajustes endless aisle | Sonnet 5 | S4.2 | 📋 |
+
+## 📨 Template de kickoff (usado pela coordenadora)
+
+> Contexto: plataforma B2B da Feet Colombia (Medusa v2), repo `Sants-M13/Medusa`, base `staging`. Estrela-guia do roadmap: aposentar planilhas e fluxos do Asana — a plataforma é a fonte da verdade; Oasis (e Odoo em 2027) fica só como emissor fiscal.
+> Missão: <escopo fechado da entrega>.
+> Branch: `claude/<slug>` a partir de `staging`. Entregável: <doc-only | código+testes>, PR pequena para `staging` (merge é do Bruno).
+> Contratos: respeitar `docs/specs/pedidos/ESTADOS_E_EVENTOS.md` (quando existir).
+> Reporte: memória `wip-<id>` + resumo de 5 linhas para `session_01N2HTXDVaGku5z29N3sSJAJ`.
+
+## 🔄 Log de coordenação
+- **10/08** — Quadro criado; leva 1 lançada: S0.1 (Opus), S0.2 (Sonnet), S0.4 (Haiku). Aguardando de Bruno: exemplo de radicado (S0.5), merge PR #1228 (S4.1), dados de venda (S0.3), capacidade de trilhas.
