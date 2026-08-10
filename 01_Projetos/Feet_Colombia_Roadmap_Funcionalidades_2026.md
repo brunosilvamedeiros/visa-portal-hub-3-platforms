@@ -14,6 +14,8 @@ tags: [feet-colombia, roadmap, medusa-v2, b2b, fulfillment, carteira, contabil, 
 # Feet Colombia — Roadmap de Funcionalidades até o fim de 2026
 
 > **v2 (10/08/2026)** — atualizado após alinhamento: ordem de largada definida (Carteira → Logística → Contábil → Comercial/REP), Contábil simplificado (fatura gerada em **sistema terceiro**; nosso sistema só notifica, recebe o **documento + nº de radicado** e libera o envio) e Comercial passa a ser as melhorias de funcionalidades/UI para os REPs com base no **estudo já realizado**.
+>
+> **v2.1 (10/08/2026)** — estudo do redesenho do painel do REP **publicado** (PR #1228 no repo do produto, doc-only em base `staging`: `docs/specs/estudo-mercado-b2b/REDESENHO_PAINEL_REP.md` + [protótipo hi-fi](https://claude.ai/code/artifact/a0a19e13-e41d-4612-a7d8-16bf86a74170)) → **Onda 4 desbloqueada**. Achado crítico incorporado: **a cobrança/mora não vive no Medusa — mora no Oasis** e chega via texto livre (Asana), o que exige decisão de fonte da verdade para o ledger da Onda 1.
 
 ## 📋 Resumo Executivo
 
@@ -58,6 +60,7 @@ Mesmo com ondas sequenciadas, os contratos vêm antes de qualquer código para q
 3. **Modelagem caixa vs pares** (estruturante p/ estoque, catálogo e fronts — RFP já previa "pares na caixa fechada").
 4. **Auditoria do Medusa v2 em produção** (módulos ativos, customizações, dados).
 5. **Definições do fluxo contábil**: qual sistema terceiro emite a fatura, formato do documento (PDF/XML), campo **nº de radicado** e regras de validação.
+6. **Fonte da verdade da cobrança/mora** *(achado do estudo do REP)*: hoje vive no **Oasis** e chega via texto livre no Asana — decidir como o ledger da Onda 1 absorve isso: integração, carga periódica ou lançamento manual com dono definido.
 
 ---
 
@@ -112,15 +115,15 @@ Devolução aprovada → nota crédito no sistema terceiro → upload + radicado
 
 | Etapa | Entrega |
 |---|---|
-| 4.1 | **Revisão do estudo já realizado** (protótipos Portal Andino): walkthrough com 2–3 REPs, checklist abaixo, métricas → **backlog priorizado** (quick wins × estruturais) |
+| 4.1 | **Estudo publicado ✔** (PR #1228: diagnóstico, 8 telas, corte Now/Next/Later; rep modelado como "cliente com crachá" em `/account`) → resta **validar com 2–3 REPs** contra o checklist abaixo e ratificar o corte antes do build |
 | 4.2 | Melhorias no catálogo **caja** 🟡 e **pares**: pedido rápido por grade, disponibilidade em tempo real, status de pedidos da carteira do REP, recompra |
 | 4.3 | Financeiro no front: saldo, limite, vencidos, upload de comprovante (consome APIs da Onda 1) |
 | 4.4 | Vitrine Infinita B2B: ajustes de endless aisle com estoque em tempo real |
 
 **Checklist de verificação do estudo (4.1)**: pedido por grade em poucos toques · disponibilidade por bodega · saldo/limite do cliente *antes* de fechar pedido · status de pedidos e entregas da carteira do REP · recompra 1 toque · comprovante em nome do cliente · mobile-first com conexão instável.
 
-> [!WARNING]
-> O board Miro retornou vazio via API — anexar/exportar o estudo à KB (ou revisar permissões) antes da 4.1.
+> [!NOTE]
+> **Estudo publicado em 10/08** — PR #1228 (doc-only, base `staging`), **aguardando merge do Bruno**; enquanto não mergear, outras sessões só encontram o doc pela branch `claude/sales-rep-dashboard-redesign-2ff66a`. Desdobramentos: issues **#589 (metas)** e **#590 (visitas)** ficaram *fora do corte* → backlog fase 2; **#593 (bug do timeline "Facturado") sugerido como P1** — tratar junto do gate da Onda 3, que introduz o estado *Faturado* no fluxo. Timing do estudo: redesenho aterrissa **pós-IFLS**, compatível com a implementação 4.2 a partir de outubro.
 
 ---
 
@@ -156,7 +159,8 @@ Devolução aprovada → nota crédito no sistema terceiro → upload + radicado
 |---|---|---|---|
 | 1 | Modelagem caixa vs pares mal definida | retrabalho em estoque + fronts | decidir na Fase 0 com dado real de venda |
 | 2 | Definições do fluxo contábil: qual sistema terceiro, formato do doc, padrão do radicado | bloqueia 3.2 | fechar na Fase 0 (é definição, não integração) |
-| 3 | Estudo do REP não acessível (board Miro vazio via API) | bloqueia 4.1 | anexar/exportar o estudo à KB |
+| 3 | ~~Estudo do REP não acessível~~ **Resolvido 10/08**: estudo publicado (PR #1228 + protótipo) | — | mergear a PR e agendar a validação com REPs |
+| 3b | Cobrança/mora fora do Medusa (vive no Oasis; chega via texto livre no Asana) | estado de conta da Onda 1 impreciso/incompleto | decidir fonte da verdade na Fase 0 (integração × carga periódica × lançamento manual) |
 | 4 | Legenda do mapa (amarelo = prioridade?) | priorização | validar com o time |
 | 5 | Capacidade do time (2 trilhas = 2 devs/squads) | cronograma | confirmar alocação; com 1 dev, seguir ordem 1→2→3→4 estrita |
 | 6 | Gate contábil como gargalo (pedido parado esperando fatura) | SLA de entrega | SLA de faturamento + alerta de fila parada (3.1) |
@@ -167,11 +171,13 @@ Devolução aprovada → nota crédito no sistema terceiro → upload + radicado
 ## ✅ Próximos Passos Imediatos
 
 1. Confirmar capacidade (1 ou 2 trilhas) e datas da Fase 0 (ago S3).
-2. Anexar o estudo do REP à KB → agenda da revisão 4.1.
+2. **Mergear a PR #1228** do estudo (base `staging`) e agendar a validação 4.1 com 2–3 REPs.
 3. Fechar as definições do fluxo contábil (sistema terceiro, doc, radicado) — reunião de 1h resolve.
-4. Validar leitura do mapa (amarelos = prioridade) e escopo de Pedidos Programados (fase 2?).
-5. Auditoria técnica do Medusa v2 em produção.
+4. Decidir a fonte da verdade da **cobrança (Oasis → ledger)** — entra na pauta da Fase 0.
+5. Validar leitura do mapa (amarelos = prioridade) e escopo de Pedidos Programados (fase 2?).
+6. Auditoria técnica do Medusa v2 em produção.
 
 ## 📝 Histórico
 - [07/08/2026 — Definição das Funcionalidades até o Fim do Ano](../02_Reunioes/2026-08-07_Definicao_Funcionalidades_Feet_Colombia.md)
 - 10/08/2026 — Alinhamento: ordem de largada, contábil simplificado (doc + radicado), comercial = estudo REPs *(refletido nesta v2)*
+- 10/08/2026 — Estudo do redesenho do painel do REP publicado: PR #1228, [protótipo](https://claude.ai/code/artifact/a0a19e13-e41d-4612-a7d8-16bf86a74170), issues #589/#590/#593, memórias `wip-redesenho-painel-representante` e `ar-cobranca-mora-no-oasis` *(integrado nesta v2.1)*
