@@ -33,17 +33,17 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 
 ## 📋 Quadro de entregas
 
-**Status**: 🚀 lançada · 📋 na fila · ⏸️ aguardando insumo · ✅ mergeada
+**Status**: 🚀 lançada · 📋 na fila · ⏸️ aguardando insumo · 🔎 PR aberta aguardando autorização · ✅ mergeada
 
 ### Fase 0 — Contratos e Modelagem (ago S3)
 | ID | Entrega (PR pequena) | Modelo | Depende | Status |
 |---|---|---|---|---|
-| S0.1 | Spec: máquina de estados + catálogo de eventos (`docs/specs/pedidos/ESTADOS_E_EVENTOS.md`) | Opus 5 | — | 🚀 10/08 |
-| S0.2 | Auditoria Medusa v2 em produção (`docs/specs/AUDITORIA_MEDUSA_V2.md`, read-only) | Sonnet 5 | — | 🚀 10/08 |
+| S0.1 | Spec: máquina de estados + catálogo de eventos (destaque: gate configurável `FACTURA_ANTES_DESPACHO`) | Opus 5 | — | 🔎 PR aberta |
+| S0.2 | Auditoria Medusa v2 em produção (completa) | Sonnet 5 | — | 🔎 PR #1230 |
 | S0.3 | Decisão caixa × pares (ADR com dados reais de venda) | Opus 5 | S0.2 + dados de venda | 📋 |
-| S0.4 | Inventário de controles paralelos (planilhas/Asana → onda → marco) | Haiku 4.5 | — | 🚀 10/08 |
-| S0.5 | Spec do registro de fatura: campos, radicado, validações (base: fatura real FEET59785) | Haiku 4.5 | ~~exemplo real~~ recebido 10/08 | 🚀 10/08 |
-| S0.6 | Extração de vendas históricas via integração Asana existente (somente leitura, mesmas credenciais do sistema) | Sonnet 5 | — | 🚀 10/08 |
+| S0.4 | Inventário de controles paralelos (7 controles mapeados) | Haiku 4.5 | — | 🔎 PR #1229 |
+| S0.5 | Spec do registro de fatura (base: fatura real FEET59785) | Haiku 4.5 | recebido 10/08 | 🚀 em execução |
+| S0.6 | Extração de vendas históricas do Asana — **reatribuída à coordenadora** (conector Asana habilitado no chat; sessão bloqueada em ASANA_PAT arquivada) | Coordenadora (Fable) | conector ✔ | 🔁 10/08 |
 
 ### Onda 1 — Carteira (ago S4 → set)
 | ID | Entrega | Modelo | Depende | Status |
@@ -78,7 +78,7 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 ### Onda 4 — Comercial / Front REP (out → dez)
 | ID | Entrega | Modelo | Depende | Status |
 |---|---|---|---|---|
-| S4.1 | Merge autorizado da PR #1228 + roteiro de validação com REPs | Haiku 4.5 | autorização do merge (dada 10/08) | 🚀 10/08 |
+| S4.1 | Merge autorizado da PR #1228 ✅ (executado) + roteiro de validação com REPs | Haiku 4.5 | — | 🔎 PR #1232 |
 | S4.2 | Quick wins "Now" do estudo + bug #593 (timeline Facturado) | Sonnet 5 | S4.1 | 📋 |
 | S4.3 | Financeiro no front (saldo/limite/comprovante) | Sonnet 5 | S1.4 | 📋 |
 | S4.4 | Vitrine Infinita: ajustes endless aisle | Sonnet 5 | S4.2 | 📋 |
@@ -93,6 +93,7 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 
 ## 🔄 Log de coordenação
 - **10/08** — Quadro criado; leva 1 lançada: S0.1 (Opus), S0.2 (Sonnet), S0.4 (Haiku). Aguardando de Bruno: exemplo de radicado (S0.5), merge PR #1228 (S4.1), dados de venda (S0.3), capacidade de trilhas.
+- **10/08 (6)** — **Primeiro ciclo da Fase 0 fechado**: S0.1 (spec estados/eventos, com gate configurável `FACTURA_ANTES_DESPACHO`), S0.2 (auditoria, PR #1230), S0.4 (inventário, PR #1229) e S4.1 (#1228 **mergeada** ✅ + roteiro na PR #1232) prontas — **4 PRs aguardando autorização do Bruno**. S0.5 em execução. S0.6 arquivada (bloqueio ASANA_PAT) e extração reatribuída à coordenadora via conector Asana habilitado no chat. **Recon do Asana**: fulfillment já tem 5 projetos de requisitos com 84 tarefas abertas (Validação/Picking/Packing/Filtros/Guia → insumo direto p/ S2.3); projetos de Cadastro/Tipos de Curva; Traslados/Transferências; "Cuentas por pagar" com 2.9k+ tarefas; ⚠️ projeto ativo "Migración ERP – SAP Business One" (8/19 concluídas) — confirmar com Bruno se o destino ERP é Odoo ou SAP B1.
 - **10/08 (5)** — Fatura de exemplo **FEET59785** recebida (upload no chat; a resposta no Slack ficou inacessível por queda do conector — retentativa cancelada). Estrutura extraída e confirmações: emissor **OasisCom S.A.S.**; nº padrão `FEET`+5 dígitos na faixa DIAN FEET-45001→60700 (Resolución 18764091509735, 04/2025–04/2027); **CUFE** 96 hex; vínculo pedido↔fatura via **OP/Orden de compra**; condição de crédito + vencimento na fatura (alimenta aging da Carteira); linhas com **curva de tallas + cajas + pares** estruturados (insumo para S0.3). → **S0.5 lançada** (Haiku). Novo protocolo de merge registrado: Bruno autoriza, coordenação executa (merge-runner no repo do produto).
 - **10/08 (4)** — Bruno confirmou: **o sistema já tem integração com o Asana** → lançada S0.6 (Sonnet) para localizar a integração no repo e extrair as vendas históricas pela mesma via, somente leitura, entregando CSV + resumo em `docs/specs/dados/`. Alimenta a S0.3 (caixa × pares). Se o token não estiver no ambiente da sessão, ela reporta a variável exata que falta.
 - **10/08 (3)** — Slack conectado. Pedido do radicado + exemplos de fatura do Oasis postado no canal **#ia** ([mensagem](https://feet-colombia-espacio.slack.com/archives/C0BQ3PBSV6C/p1786389399555169)); quando a resposta chegar, a coordenadora lança a S0.5. Canal #ia passa a ser a via padrão de pedidos de informação ao time.
