@@ -94,6 +94,7 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 
 ## 🔄 Log de coordenação
 - **10/08** — Quadro criado; leva 1 lançada: S0.1 (Opus), S0.2 (Sonnet), S0.4 (Haiku). Aguardando de Bruno: exemplo de radicado (S0.5), merge PR #1228 (S4.1), dados de venda (S0.3), capacidade de trilhas.
+- **10/08 (17)** — **Rodada 2 de testes do Bruno**: ✔ caminho feliz da aprovação (já validado antes); ✔ export CSV para bodega — **formato confirmado OK** (Número de pedido | SKU | Cantidad — é o AS-IS que o fulfillment substituirá); ✔ pedido multi-produto #120 → rechazo ("Falta de documentos") → liberação de reservas OK segundo o Bruno (S2.1b confirma via dry-run de órfãs — screenshots mostram reservas de 17:11 ainda sem "ID de pedido", reforçando o fix do vínculo); ✘ **devolução: não encontrada** — esperado: o RMA nativo só aparece em pedido com fulfillment criado/entregue; pedidos de teste foram cancelados antes. Roteiro passado ao Bruno (aprovar → criar fulfillment manual → menu ⋯ → Crear devolución). Item 5 (Mis clientes) adiado por ele.
 - **10/08 (16)** — Decisão do Bruno: **bodegas atuais ("European Warehouse") valem para staging**; validação das bodegas reais vira **checklist pré-produção** (item 1 do checklist abaixo). **S3.1 lançada** (Sonnet): fila "Pedidos a Faturar" + notificação + simulador de `pedido.separado` para staging — próxima peça testável do fluxo contábil.
 
 ## ✅ Checklist pré-produção (itens que NÃO bloqueiam staging)
