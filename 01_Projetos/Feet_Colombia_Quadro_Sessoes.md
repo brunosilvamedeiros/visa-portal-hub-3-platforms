@@ -4,7 +4,7 @@ cliente: Feet Colombia
 titulo: Quadro de Sessões — Execução do Roadmap 2026
 status: Em Execucao
 gerente: Bruno
-coordenadora: session_01788oWZpqogkqDe2bFh24da (Coordenação Feet 2026 — sucessora; assumiu 10/08 23:22 UTC da session_01N2HTXDVaGku5z29N3sSJAJ por limite de contexto)
+coordenadora: session_01788oWZpqogkqDe2bFh24da (sucessora desde 10/08 23:22 UTC; antecessora session_01N2HTXDVaGku5z29N3sSJAJ atingiu o limite de contexto)
 repo_produto: https://github.com/Sants-M13/Medusa (base: staging)
 data_inicio: 2026-08-10
 tags: [feet-colombia, sessoes, orquestracao, roadmap-2026]
@@ -16,7 +16,7 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 
 ## 🎛️ Como funciona
 
-1. **Coordenadora**: esta sessão (`session_01N2HTXDVaGku5z29N3sSJAJ`) cria as sessões de trabalho com o modelo certo, acompanha o andamento (check-ins periódicos), integra os resultados ao roadmap e despacha a leva seguinte quando dependências fecham.
+1. **Coordenadora**: esta sessão (`session_01788oWZpqogkqDe2bFh24da`) cria as sessões de trabalho com o modelo certo, acompanha o andamento (check-ins periódicos), integra os resultados ao roadmap e despacha a leva seguinte quando dependências fecham.
 2. **Contrato de entrega de cada sessão**: branch própria `claude/<slug>` a partir de `staging` → PR pequena para `staging` (specs = doc-only; builds = código + testes) → memória `wip-<id>` → resumo de 5 linhas para a coordenadora (send_message, quando disponível).
    **Protocolo de merge (definido 10/08)**: o Bruno NÃO executa merges — a coordenadora lista as PRs prontas com resumo, o Bruno **autoriza no chat**, e a coordenadora executa: direto nos repos `brunosilvamedeiros/*`; no repo do produto (`Sants-M13/*`, fora do escopo da coordenadora) via sessão *merge-runner* (Haiku) com a autorização citada no prompt.
 3. **Paralelismo sem conflito**: specs doc-only rodam em paralelo à vontade; **nunca duas sessões no mesmo módulo/pasta**; contratos entre ondas vêm da spec S0.1 (estados + eventos).
@@ -40,9 +40,9 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 |---|---|---|---|---|
 | S0.1 | Spec: máquina de estados + catálogo de eventos (gate configurável `FACTURA_ANTES_DESPACHO`) | Opus 5 | — | ✅ #1231 |
 | S0.2 | Auditoria Medusa v2 em produção (completa) | Sonnet 5 | — | ✅ #1230 |
-| S0.3 | Decisão caixa × pares (ADR com dados reais de venda) | Opus 5 | ✅ + extração Asana | 📋 |
+| S0.3 | Decisão caixa × pares (ADR com dados reais de venda) | Opus 5 | ✅ + extração Asana | 🔎 PR aberta · ⏸️ Q1 p/ Bruno |
 | S0.4 | Inventário de controles paralelos (7 controles mapeados) | Haiku 4.5 | — | ✅ #1229 |
-| S0.5 | Spec do registro de fatura (base: fatura real FEET59785; 311 linhas) — via S0.5b | Haiku 4.5 | — | 🔎 PR #1233 |
+| S0.5 | Spec do registro de fatura (base: fatura real FEET59785; 311 linhas) — via S0.5b | Haiku 4.5 | — | ✅ #1233 |
 | S0.6 | Extração de vendas históricas do Asana — **reatribuída à coordenadora** (conector Asana habilitado no chat; sessão bloqueada em ASANA_PAT arquivada) | Coordenadora (Fable) | conector ✔ | 🔁 10/08 |
 
 ### Onda 1 — Carteira (ago S4 → set)
@@ -59,7 +59,7 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 ### Onda 2 — Logística (set → nov)
 | ID | Entrega | Modelo | Depende | Status |
 |---|---|---|---|---|
-| S2.1 | Config estoque nativo: locations, níveis, reservas (1.405 testes verdes; `FUNDACAO_ESTOQUE.md` com roteiro de validação) | Sonnet 5 | ✅ S0.2 | 🔎 PR #1234 |
+| S2.1 | Config estoque nativo: locations, níveis, reservas (1.405 testes verdes; `FUNDACAO_ESTOQUE.md` com roteiro de validação) | Sonnet 5 | ✅ S0.2 | ✅ #1234 |
 | S2.2 | Cadastro/grades + import (modelagem aplicada) | Sonnet 5 | S0.3 | 📋 |
 | S2.3 | Spec das telas do fulfillment-ops (fila → pick → pack) | Opus 5 | S0.1 | 📋 |
 | S2.4 | Build: fila + verificar + preparar | Sonnet 5 | S2.3 | 📋 |
@@ -72,8 +72,8 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 ### Onda 3 — Contábil (out)
 | ID | Entrega | Modelo | Depende | Status |
 |---|---|---|---|---|
-| S3.1 | Módulo `invoicing`: fila "pendentes de fatura" + notificações + **simulador de separação p/ staging** | Sonnet 5 | ✅ S0.1 | 🔎 #1237 autorizada → MR-5 |
-| S3.2 | Registro de fatura: upload doc + radicado + `fatura.registrada` | Sonnet 5 | S3.1, S0.5 | 📋 |
+| S3.1 | Módulo `invoicing`: fila "pendentes de fatura" + notificações + **simulador de separação p/ staging** | Sonnet 5 | ✅ S0.1 | ✅ #1237 |
+| S3.2 | Registro de fatura: upload doc + radicado + `fatura.registrada` | Sonnet 5 | S3.1, S0.5 | 🚀 10/08 |
 | S3.3 | Notas crédito/débito de devoluções | Haiku 4.5 | S3.2, S2.8 | 📋 |
 
 ### Onda 4 — Comercial / Front REP (out → dez)
@@ -90,9 +90,10 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 > Missão: <escopo fechado da entrega>.
 > Branch: `claude/<slug>` a partir de `staging`. Entregável: <doc-only | código+testes>, PR pequena para `staging` (merge é do Bruno).
 > Contratos: respeitar `docs/specs/pedidos/ESTADOS_E_EVENTOS.md` (quando existir).
-> Reporte: memória `wip-<id>` + resumo de 5 linhas para `session_01N2HTXDVaGku5z29N3sSJAJ`.
+> Reporte: memória `wip-<id>` + resumo de 5 linhas para `session_01788oWZpqogkqDe2bFh24da`.
 
 ## 🔄 Log de coordenação
+- **10/08 (22 — 23:30)** — **Troca de coordenadora**: antecessora atingiu o limite de contexto; esta sessão (`session_01788oWZpqogkqDe2bFh24da`) assume o mesmo papel e método. Ações do primeiro turno: S2.1 arquivada (entrega #1234 já mergeada); **S3.2 lançada** (Sonnet, `claude/invoicing-registro-fatura` — deps #1237 e spec #1233 fechadas); **S0.3 avançou** (ADR redigido, PR aberta) mas **aguarda resposta do Bruno à Q1**: pares avulsos saem de caixa aberta na bodega ou de estoque físico separado? Bruno testando a fila em staging (pedido #121: criado → aprovado → reservado ✔) → roteiro da parte contábil passado no chat; sessão AUX (Haiku) lançada para extrair a rota exata do simulador/fila e o comando do dry-run de órfãs da #1238.
 - **10/08** — Quadro criado; leva 1 lançada: S0.1 (Opus), S0.2 (Sonnet), S0.4 (Haiku). Aguardando de Bruno: exemplo de radicado (S0.5), merge PR #1228 (S4.1), dados de venda (S0.3), capacidade de trilhas.
 - **10/08 (22)** — **PASSAGEM DE BASTÃO**: contexto da coordenadora original em 58% → Bruno pediu sucessora. Criada `session_01788oWZpqogkqDe2bFh24da` ("Coordenação Feet 2026 — Roadmap (sucessora)", Fable 5, neste mesmo repo/branch) com briefing completo: método (sessões por complexidade, protocolo de merge por autorização, arquivamento, check-ins), estado (10 PRs mergeadas; spec Carteira aguardando revisão; #1235 segurada; S0.3 rodando), próximas levas e decisões vigentes. Check-in da antecessora desarmado — o loop é da sucessora. A sessão original permanece como histórico (não arquivar até a sucessora confirmar a assunção; reports de sessões antigas ainda podem apontar para o id antigo — a sucessora deve instruir o id novo nos próximos prompts).
 - **10/08 (21)** — **Check-in 23h**: MR-5 concluiu — **#1237 (fila de faturamento) e #1238 (fix de reservas) mergeadas, CI verde** → staging pronto para a bateria de teste do Bruno. **S1.1 entregou PR #1235** (wallet core) — segurar autorização até o alinhamento com a spec (S1.0b resolveu as 4 divergências e adicionou o crédito de devolução; ajustes requeridos no wallet-core listados na spec). **Spec da Carteira pronta para revisão do Bruno** (branch `claude/spec-carteira`). Asana seguiu indisponível → **S0.3 lançada em modo fallback** (Opus; dados do Medusa; histórico Asana como validação posterior). Higiene: 6 sessões arquivadas (S3.1, S2.1b, S1.0, S1.0b, S1.1, MR-5). Ativas: S0.3 + coordenadora. Próximo check-in: +90 min.
