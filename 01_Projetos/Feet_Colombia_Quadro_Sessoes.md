@@ -73,7 +73,7 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 | ID | Entrega | Modelo | Depende | Status |
 |---|---|---|---|---|
 | S3.1 | Módulo `invoicing`: fila "pendentes de fatura" + notificações + **simulador de separação p/ staging** | Sonnet 5 | ✅ S0.1 | ✅ #1237 |
-| S3.2 | Registro de fatura: upload doc + radicado + `fatura.registrada` | Sonnet 5 | S3.1, S0.5 | 🚀 10/08 |
+| S3.2 | Registro de fatura: upload doc + radicado + `fatura.registrada` | Sonnet 5 | S3.1, S0.5 | 🔎 PR #1240 |
 | S3.3 | Notas crédito/débito de devoluções | Haiku 4.5 | S3.2, S2.8 | 📋 |
 
 ### Onda 4 — Comercial / Front REP (out → dez)
@@ -93,6 +93,7 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 > Reporte: memória `wip-<id>` + resumo de 5 linhas para `session_01788oWZpqogkqDe2bFh24da`.
 
 ## 🔄 Log de coordenação
+- **10/08 (25 — 23:55)** — **S3.2 entregou: PR #1240 aberta** (modelo Invoice + endpoint registrar-factura, 109 suites verdes) em ~18 min — apresentada ao Bruno para autorização (ele pediu aviso quando fosse "subir pra staging"). Perguntas do teste dele respondidas: entrada automática na fila = S2.4/S2.5 (fulfillment, out); bloqueio de envio sem fatura = S2.6 com flag `FACTURA_ANTES_DESPACHO` (spec #1231) — ofertada antecipação da S2.6 pós-S3.2. AUX travou sem entregar o comentário do dry-run → arquivada, trigger deletado, **AUX2 lançada** (Haiku) com missão única: postar as instruções do dry-run como comentário na PR #1238. S0.3 segue aguardando Q1.
 - **10/08 (24 — 23:40)** — **Fila de faturamento (#1237) validada pelo Bruno em staging**: pedido #121 (criado → aprovado → reservado) + "Simular separación" na tela Facturación → entrou "En fila" com badge *Simulado*, cliente/valor/condição de pago corretos e botão "Registrar factura" desabilitado aguardando a S3.2 (comportamento esperado). Dúvida de UX registrada: o simulador exige selecionar o pedido no campo de busca antes de habilitar o botão — Bruno não achou de primeira (aceitável: ferramenta só de staging, some em produção). Restam da bateria: conferir "ID de pedido" nas reservas do #121 (fix #1238) e o dry-run de órfãs (comando sendo extraído pela AUX).
 - **10/08 (23 — 23:30)** — **Assunção confirmada pela sucessora**: antecessora atingiu o limite de contexto; esta sessão (`session_01788oWZpqogkqDe2bFh24da`) assume o mesmo papel e método. Ações do primeiro turno: S2.1 arquivada (entrega #1234 já mergeada); **S3.2 lançada** (Sonnet, `claude/invoicing-registro-fatura` — deps #1237 e spec #1233 fechadas); **S0.3 avançou** (ADR redigido, PR aberta) mas **aguarda resposta do Bruno à Q1**: pares avulsos saem de caixa aberta na bodega ou de estoque físico separado? Bruno testando a fila em staging (pedido #121: criado → aprovado → reservado ✔) → roteiro da parte contábil passado no chat; sessão AUX (Haiku) lançada para extrair a rota exata do simulador/fila e o comando do dry-run de órfãs da #1238.
 - **10/08** — Quadro criado; leva 1 lançada: S0.1 (Opus), S0.2 (Sonnet), S0.4 (Haiku). Aguardando de Bruno: exemplo de radicado (S0.5), merge PR #1228 (S4.1), dados de venda (S0.3), capacidade de trilhas.
