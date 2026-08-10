@@ -38,17 +38,17 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 ### Fase 0 — Contratos e Modelagem (ago S3)
 | ID | Entrega (PR pequena) | Modelo | Depende | Status |
 |---|---|---|---|---|
-| S0.1 | Spec: máquina de estados + catálogo de eventos (destaque: gate configurável `FACTURA_ANTES_DESPACHO`) | Opus 5 | — | 🔎 PR aberta |
-| S0.2 | Auditoria Medusa v2 em produção (completa) | Sonnet 5 | — | 🔎 PR #1230 |
-| S0.3 | Decisão caixa × pares (ADR com dados reais de venda) | Opus 5 | S0.2 + dados de venda | 📋 |
-| S0.4 | Inventário de controles paralelos (7 controles mapeados) | Haiku 4.5 | — | 🔎 PR #1229 |
-| S0.5 | Spec do registro de fatura (base: fatura real FEET59785) | Haiku 4.5 | recebido 10/08 | 🚀 em execução |
+| S0.1 | Spec: máquina de estados + catálogo de eventos (gate configurável `FACTURA_ANTES_DESPACHO`) | Opus 5 | — | ✅ #1231 |
+| S0.2 | Auditoria Medusa v2 em produção (completa) | Sonnet 5 | — | ✅ #1230 |
+| S0.3 | Decisão caixa × pares (ADR com dados reais de venda) | Opus 5 | ✅ + extração Asana | 📋 |
+| S0.4 | Inventário de controles paralelos (7 controles mapeados) | Haiku 4.5 | — | ✅ #1229 |
+| S0.5 | Spec do registro de fatura (base: fatura real FEET59785; 311 linhas) — via S0.5b | Haiku 4.5 | — | 🔎 PR #1233 |
 | S0.6 | Extração de vendas históricas do Asana — **reatribuída à coordenadora** (conector Asana habilitado no chat; sessão bloqueada em ASANA_PAT arquivada) | Coordenadora (Fable) | conector ✔ | 🔁 10/08 |
 
 ### Onda 1 — Carteira (ago S4 → set)
 | ID | Entrega | Modelo | Depende | Status |
 |---|---|---|---|---|
-| S1.1 | Módulo `wallet`: entidades do ledger + serviços + testes | Sonnet 5 | S0.1 | 📋 |
+| S1.1 | Módulo `wallet`: entidades do ledger + serviços + testes | Sonnet 5 | ✅ S0.1 | 🚀 10/08 |
 | S1.2 | Estado de conta no admin: extrato, saldo, aging, export | Sonnet 5 | S1.1 | 📋 |
 | S1.3 | Comprovantes: upload → fila de conciliação → baixa | Sonnet 5 | S1.1 | 📋 |
 | S1.4 | Límite de crédito + gate no checkout + API saldo/limite | Sonnet 5 | S1.1 | 📋 |
@@ -58,7 +58,7 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 ### Onda 2 — Logística (set → nov)
 | ID | Entrega | Modelo | Depende | Status |
 |---|---|---|---|---|
-| S2.1 | Config estoque nativo: locations, níveis, reservas | Sonnet 5 | S0.2 | 📋 |
+| S2.1 | Config estoque nativo: locations, níveis, reservas | Sonnet 5 | ✅ S0.2 | 🚀 10/08 |
 | S2.2 | Cadastro/grades + import (modelagem aplicada) | Sonnet 5 | S0.3 | 📋 |
 | S2.3 | Spec das telas do fulfillment-ops (fila → pick → pack) | Opus 5 | S0.1 | 📋 |
 | S2.4 | Build: fila + verificar + preparar | Sonnet 5 | S2.3 | 📋 |
@@ -93,6 +93,7 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 
 ## 🔄 Log de coordenação
 - **10/08** — Quadro criado; leva 1 lançada: S0.1 (Opus), S0.2 (Sonnet), S0.4 (Haiku). Aguardando de Bruno: exemplo de radicado (S0.5), merge PR #1228 (S4.1), dados de venda (S0.3), capacidade de trilhas.
+- **10/08 (10)** — **Fase 0 ciclo 1: 100% mergeada** (MR-2 concluiu #1230 e #1231 em ~2 min, resolvendo conflito trivial de MEMORY.md; MR-1 já havia mergeado #1229 e #1232). **S0.5b entregou**: spec de 311 linhas, **PR #1233 aguardando autorização do Bruno**. Esclarecido: sessões "paradas" no painel = concluídas (trabalham em rajadas e encerram o turno). **Ciclo 2 lançado nas 2 trilhas**: S1.1 módulo `wallet` (Sonnet, trilha financeira) + S2.1 fundação de estoque (Sonnet, trilha operacional) — primeiras sessões de CÓDIGO do roadmap. Pendente da coordenadora: extração Asana (vendas B2B 2026 + 84 tarefas de requisitos de fulfillment) → destrava S0.3 e S2.3.
 - **10/08 (9)** — Pergunta do Bruno ("sessões paradas?") respondida com diagnóstico: sessões IDLE após entregar = **normal** (S0.1/S0.2/S0.4/S4.1 concluídas). Dois casos reais corrigidos: **(a) S0.5 parou após declarar o plano** (quirk de skill interativa) → arquivada e relançada como **S0.5b** com instrução de execução contínua; **(b) MR-1 mergeou 2/4 PRs** e barrou 2 por conterem arquivos de memória de sessão fora de `docs/` (convenção legítima do repo) → **MR-2 despachada** com guarda ajustada (docs/ + caminhos de memória; código continua vetado).
 - **10/08 (8)** — Compromisso de coordenação: **avisar o Bruno (com push) assim que houver algo testável em `staging`** — critério: primeira PR de CÓDIGO mergeada + build de staging verde, acompanhada de mini-roteiro de teste. Primeiros candidatos: fila "Pedidos a Faturar" com evento mockado (S3.1) e estado de conta da carteira (S1.1+S1.2). Specs doc-only não contam como testável.
 - **10/08 (7)** — Bruno **autorizou as 4 PRs** do ciclo 1 → **MR-1 despachada** (merge-runner Haiku: #1229, #1230, #1232 + PR da branch `claude/spec-estados-eventos-pedido`, com guarda doc-only obrigatória). **ERP confirmado: Odoo** — projeto "Migración SAP Business One" no Asana é antigo, desconsiderar. Bruno enviou o link do projeto **Pedidos/Vendas B2B 2026** no Asana (workspace `1209119687274857`, projeto `1212717513880483`) → fonte oficial para a extração de vendas (S0.6/coordenadora) e para a S0.3; conector Asana oscilando no momento — extração agendada para o check-in.
