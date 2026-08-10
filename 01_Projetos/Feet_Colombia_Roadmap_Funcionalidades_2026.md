@@ -3,7 +3,7 @@ id: proj-feet-01
 cliente: Feet Colombia
 titulo: Roadmap de Funcionalidades 2026 — Plataforma B2B (Medusa v2)
 status: Em Planejamento
-fase: Plano em Ondas (v2 — 10/08/2026)
+fase: Plano em Ondas (v2.2 — 10/08/2026)
 gerente: Bruno
 data_inicio: 2026-08-07
 proximo_marco: Fase 0 enxuta — Contratos e Modelagem (ago S3)
@@ -15,11 +15,15 @@ tags: [feet-colombia, roadmap, medusa-v2, b2b, fulfillment, carteira, contabil, 
 
 > **v2 (10/08/2026)** — atualizado após alinhamento: ordem de largada definida (Carteira → Logística → Contábil → Comercial/REP), Contábil simplificado (fatura gerada em **sistema terceiro**; nosso sistema só notifica, recebe o **documento + nº de radicado** e libera o envio) e Comercial passa a ser as melhorias de funcionalidades/UI para os REPs com base no **estudo já realizado**.
 >
-> **v2.1 (10/08/2026)** — estudo do redesenho do painel do REP **publicado** (PR #1228 no repo do produto, doc-only em base `staging`: `docs/specs/estudo-mercado-b2b/REDESENHO_PAINEL_REP.md` + [protótipo hi-fi](https://claude.ai/code/artifact/a0a19e13-e41d-4612-a7d8-16bf86a74170)) → **Onda 4 desbloqueada**. Achado crítico incorporado: **a cobrança/mora não vive no Medusa — mora no Oasis** e chega via texto livre (Asana), o que exige decisão de fonte da verdade para o ledger da Onda 1.
+> **v2.1 (10/08/2026)** — estudo do redesenho do painel do REP **publicado** (PR #1228 no repo do produto, doc-only em base `staging`: `docs/specs/estudo-mercado-b2b/REDESENHO_PAINEL_REP.md` + [protótipo hi-fi](https://claude.ai/code/artifact/a0a19e13-e41d-4612-a7d8-16bf86a74170)) → **Onda 4 desbloqueada**. Achado crítico incorporado: **a cobrança/mora não vive no Medusa — mora no Oasis** e chega via texto livre (Asana).
+>
+> **v2.2 (10/08/2026)** — reorientação da estrela-guia: **aposentar as planilhas de controle e os fluxos do Asana**. O ledger da Onda 1 nasce como **fonte da verdade da cobrança** (sem sincronização contínua com o Oasis — carga inicial única + convivência curta) e cada marco passa a carregar as aposentadorias correspondentes como critério de pronto.
 
 ## 📋 Resumo Executivo
 
 O plano se organiza em **4 ondas com ordem de largada definida** — Carteira primeiro, depois Logística, depois Contábil, depois Comercial/Front REP — mas desenhadas como **frentes independentes que se sobrepõem no tempo** com o mínimo de conflito: cada onda é um módulo isolado, e onde uma depende da outra existe um **contrato** (evento ou API) fechado na Fase 0.
+
+**⭐ Estrela-guia: aposentar as planilhas de controle e os fluxos do Asana.** A plataforma é a fonte da verdade operacional; sistemas terceiros ficam **apenas no papel fiscal** (emissão de fatura/nota). Nada de sincronização permanente com controles paralelos: o padrão é **cutover** — carga inicial única, janela curta de convivência (dupla checagem ≤ 2 semanas) e **aposentadoria com data**, amarrada aos marcos. Cada onda só está "pronta" quando a planilha/board que ela substitui for formalmente desligada.
 
 Com 2 devs/squads, o plano roda em **2 trilhas paralelas naturais**:
 - **Trilha Financeira**: Carteira → Contábil → Financeiro no front (compartilham o ledger — mesmo eixo).
@@ -60,7 +64,7 @@ Mesmo com ondas sequenciadas, os contratos vêm antes de qualquer código para q
 3. **Modelagem caixa vs pares** (estruturante p/ estoque, catálogo e fronts — RFP já previa "pares na caixa fechada").
 4. **Auditoria do Medusa v2 em produção** (módulos ativos, customizações, dados).
 5. **Definições do fluxo contábil**: qual sistema terceiro emite a fatura, formato do documento (PDF/XML), campo **nº de radicado** e regras de validação.
-6. **Fonte da verdade da cobrança/mora** *(achado do estudo do REP)*: hoje vive no **Oasis** e chega via texto livre no Asana — decidir como o ledger da Onda 1 absorve isso: integração, carga periódica ou lançamento manual com dono definido.
+6. **Plano de aposentadoria dos controles paralelos**: inventariar **todas** as planilhas e fluxos de Asana operacionais (dono → onda que substitui → marco de desligamento). Para a cobrança/mora (hoje Oasis + texto livre no Asana): o **ledger da Onda 1 assume como fonte da verdade** — carga inicial única dos saldos em aberto, convivência de dupla checagem ≤ 2 semanas, planilha arquivada e fluxo do Asana encerrado. O Oasis permanece **apenas como emissor fiscal** *(confirmar se ele é o "sistema terceiro" da Onda 3 — se sim, o doc + radicado já é o único ponto de contato necessário)*.
 
 ---
 
@@ -72,7 +76,7 @@ Mesmo com ondas sequenciadas, os contratos vêm antes de qualquer código para q
 | 1.2 | **Comprovantes de pago**: upload pelo lojista/REP, fila de conciliação, aprovação/rejeição auditável, baixa no ledger |
 | 1.3 | **Límite de crédito**: limite por cliente, exposição (saldo aberto + pedidos em curso), gate no checkout (bloqueio ou aprovação manual), alertas |
 
-*Até a Onda 3 existir, débitos entram por lançamento manual; quando `fatura.registrada` estiver no ar, o ledger passa a consumir o evento — sem retrabalho, o contrato já nasce pronto.*
+*O ledger nasce **fonte da verdade da cobrança** — é ele quem aposenta a planilha de saldos e o texto livre do Asana. Cutover: carga inicial única dos saldos em aberto na entrada em produção; daí em diante os lançamentos vivem **só na plataforma** (registro dentro do sistema até a Onda 3; automático via `fatura.registrada` a partir do M2). Sem sincronização contínua com o Oasis; convivência de dupla checagem ≤ 2 semanas e planilha arquivada.*
 
 ## 🌊 Onda 2 — Logística *(largada ~2 semanas após Onda 1 · nativo Medusa + `fulfillment-ops` · ~8–10 semanas)*
 
@@ -110,6 +114,8 @@ Devolução aprovada → nota crédito no sistema terceiro → upload + radicado
 | 3.4 | Notas crédito/débito de devoluções: upload + radicado vinculado à devolução → crédito no ledger |
 
 *Integração direta com o sistema terceiro (emissão automática) fica como evolução futura — o contrato `fatura.registrada` não muda.*
+
+*Aposentadorias desta onda: a **3.1** mata o aviso manual de "pode faturar" (Asana/WhatsApp); a **3.2** mata a planilha de controle fatura ↔ pedido — o vínculo passa a viver no próprio pedido, com documento + radicado.*
 
 ## 🌊 Onda 4 — Comercial / Front do REP *(discovery imediato · implementação a partir de out)*
 
@@ -151,6 +157,15 @@ Devolução aprovada → nota crédito no sistema terceiro → upload + radicado
 | **Nov** | 3.3 gate ativo + 3.4 notas crédito | 2.4 devoluções/garantias | 4.2 → 4.3 | **M3** piloto com clientes/REPs |
 | **Dez** | ——— estabilização · treinamento · rollout (100% até ~18/12) ——— | | 4.4 vitrine | **M4** go-live geral |
 
+**Aposentadorias por marco** (critério de pronto — a onda só fecha quando o controle paralelo desliga):
+
+| Marco | O que se desliga |
+|---|---|
+| **M1** (fim set) | Carga inicial de saldos no ledger feita → começa a convivência controlada com a planilha de cobrança (dupla checagem, prazo fechado) |
+| **M2** (fim out) | Aviso manual de "pode faturar" (Asana/WhatsApp) · planilha da fila de separação · planilha fatura ↔ pedido |
+| **M3** (fim nov) | **Planilha de cobrança/saldos arquivada** (ledger é a única verdade) · fluxo de devoluções fora do sistema |
+| **M4** (dez) | Planilhas restantes de estoque/movimentações · Asana sai da operação de pedidos (fica só para o que não é operação) |
+
 ---
 
 ## ⚠️ Riscos & Pendências
@@ -160,7 +175,8 @@ Devolução aprovada → nota crédito no sistema terceiro → upload + radicado
 | 1 | Modelagem caixa vs pares mal definida | retrabalho em estoque + fronts | decidir na Fase 0 com dado real de venda |
 | 2 | Definições do fluxo contábil: qual sistema terceiro, formato do doc, padrão do radicado | bloqueia 3.2 | fechar na Fase 0 (é definição, não integração) |
 | 3 | ~~Estudo do REP não acessível~~ **Resolvido 10/08**: estudo publicado (PR #1228 + protótipo) | — | mergear a PR e agendar a validação com REPs |
-| 3b | Cobrança/mora fora do Medusa (vive no Oasis; chega via texto livre no Asana) | estado de conta da Onda 1 impreciso/incompleto | decidir fonte da verdade na Fase 0 (integração × carga periódica × lançamento manual) |
+| 3b | Cutover da cobrança (Oasis/planilha → ledger) mal executado | saldos errados no estado de conta | carga inicial validada item a item com o financeiro + dupla checagem ≤ 2 semanas + dono da conciliação |
+| 3c | Convivência prolongada com controles paralelos (dupla digitação) | time volta para a planilha e a plataforma perde a verdade | data de aposentadoria por marco + desligamento formal (planilha arquivada, board encerrado, acesso somente-leitura) |
 | 4 | Legenda do mapa (amarelo = prioridade?) | priorização | validar com o time |
 | 5 | Capacidade do time (2 trilhas = 2 devs/squads) | cronograma | confirmar alocação; com 1 dev, seguir ordem 1→2→3→4 estrita |
 | 6 | Gate contábil como gargalo (pedido parado esperando fatura) | SLA de entrega | SLA de faturamento + alerta de fila parada (3.1) |
@@ -173,7 +189,7 @@ Devolução aprovada → nota crédito no sistema terceiro → upload + radicado
 1. Confirmar capacidade (1 ou 2 trilhas) e datas da Fase 0 (ago S3).
 2. **Mergear a PR #1228** do estudo (base `staging`) e agendar a validação 4.1 com 2–3 REPs.
 3. Fechar as definições do fluxo contábil (sistema terceiro, doc, radicado) — reunião de 1h resolve.
-4. Decidir a fonte da verdade da **cobrança (Oasis → ledger)** — entra na pauta da Fase 0.
+4. **Inventariar planilhas e fluxos de Asana** (com donos) e fechar o plano de cutover da cobrança (Oasis → ledger) — pauta central da Fase 0.
 5. Validar leitura do mapa (amarelos = prioridade) e escopo de Pedidos Programados (fase 2?).
 6. Auditoria técnica do Medusa v2 em produção.
 
@@ -181,3 +197,4 @@ Devolução aprovada → nota crédito no sistema terceiro → upload + radicado
 - [07/08/2026 — Definição das Funcionalidades até o Fim do Ano](../02_Reunioes/2026-08-07_Definicao_Funcionalidades_Feet_Colombia.md)
 - 10/08/2026 — Alinhamento: ordem de largada, contábil simplificado (doc + radicado), comercial = estudo REPs *(refletido nesta v2)*
 - 10/08/2026 — Estudo do redesenho do painel do REP publicado: PR #1228, [protótipo](https://claude.ai/code/artifact/a0a19e13-e41d-4612-a7d8-16bf86a74170), issues #589/#590/#593, memórias `wip-redesenho-painel-representante` e `ar-cobranca-mora-no-oasis` *(integrado nesta v2.1)*
+- 10/08/2026 — Reorientação: **aposentar planilhas e fluxos do Asana**; ledger como fonte da verdade da cobrança, cutover com carga inicial + aposentadorias por marco *(esta v2.2)*
