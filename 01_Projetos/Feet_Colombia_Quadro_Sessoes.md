@@ -48,6 +48,7 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 ### Onda 1 — Carteira (ago S4 → set)
 | ID | Entrega | Modelo | Depende | Status |
 |---|---|---|---|---|
+| S1.0 | **Spec consolidada da Carteira** (`docs/specs/CARTEIRA.md`): ledger, estado de conta, comprovantes/conciliação, limite/gate, cutover, APIs, permissões — p/ revisão do Bruno | Opus 5 | specs Fase 0 ✅ | 🚀 10/08 |
 | S1.1 | Módulo `wallet`: entidades do ledger + serviços + testes | Sonnet 5 | ✅ S0.1 | 🚀 10/08 |
 | S1.2 | Estado de conta no admin: extrato, saldo, aging, export | Sonnet 5 | S1.1 | 📋 |
 | S1.3 | Comprovantes: upload → fila de conciliação → baixa | Sonnet 5 | S1.1 | 📋 |
@@ -93,6 +94,7 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 
 ## 🔄 Log de coordenação
 - **10/08** — Quadro criado; leva 1 lançada: S0.1 (Opus), S0.2 (Sonnet), S0.4 (Haiku). Aguardando de Bruno: exemplo de radicado (S0.5), merge PR #1228 (S4.1), dados de venda (S0.3), capacidade de trilhas.
+- **10/08 (12)** — Bruno perguntou pela spec da Carteira → gap identificado: o desenho estava distribuído (roadmap + eventos #1231 + registro de fatura #1233) sem documento único. **S1.0 lançada (Opus)**: spec consolidada `docs/specs/CARTEIRA.md` para revisão do Bruno, alinhando-se ao código em andamento da S1.1 (`claude/wallet-core`) e sinalizando divergências. Inclui cutover da planilha, APIs para os fronts, permissões e até 8 perguntas de negócio.
 - **10/08 (11)** — Bruno autorizou **#1233** → **MR-3 despachada** para o merge. **Higiene do painel**: arquivadas as 7 sessões finalizadas (S0.1, S0.2, S0.4, S0.5b, S4.1, MR-1, MR-2) — política daqui em diante: a coordenadora arquiva cada sessão ao confirmar a entrega. Painel ativo agora: S1.1 (wallet), S2.1 (estoque), MR-3 (merge #1233) + coordenadora.
 - **10/08 (10)** — **Fase 0 ciclo 1: 100% mergeada** (MR-2 concluiu #1230 e #1231 em ~2 min, resolvendo conflito trivial de MEMORY.md; MR-1 já havia mergeado #1229 e #1232). **S0.5b entregou**: spec de 311 linhas, **PR #1233 aguardando autorização do Bruno**. Esclarecido: sessões "paradas" no painel = concluídas (trabalham em rajadas e encerram o turno). **Ciclo 2 lançado nas 2 trilhas**: S1.1 módulo `wallet` (Sonnet, trilha financeira) + S2.1 fundação de estoque (Sonnet, trilha operacional) — primeiras sessões de CÓDIGO do roadmap. Pendente da coordenadora: extração Asana (vendas B2B 2026 + 84 tarefas de requisitos de fulfillment) → destrava S0.3 e S2.3.
 - **10/08 (9)** — Pergunta do Bruno ("sessões paradas?") respondida com diagnóstico: sessões IDLE após entregar = **normal** (S0.1/S0.2/S0.4/S4.1 concluídas). Dois casos reais corrigidos: **(a) S0.5 parou após declarar o plano** (quirk de skill interativa) → arquivada e relançada como **S0.5b** com instrução de execução contínua; **(b) MR-1 mergeou 2/4 PRs** e barrou 2 por conterem arquivos de memória de sessão fora de `docs/` (convenção legítima do repo) → **MR-2 despachada** com guarda ajustada (docs/ + caminhos de memória; código continua vetado).
