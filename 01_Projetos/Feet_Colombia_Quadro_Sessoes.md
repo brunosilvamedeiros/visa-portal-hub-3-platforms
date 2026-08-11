@@ -73,7 +73,7 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 | ID | Entrega | Modelo | Depende | Status |
 |---|---|---|---|---|
 | S3.1 | Módulo `invoicing`: fila "pendentes de fatura" + notificações + **simulador de separação p/ staging** | Sonnet 5 | ✅ S0.1 | ✅ #1237 |
-| S3.2 | Registro de fatura: upload doc + radicado + `fatura.registrada` | Sonnet 5 | S3.1, S0.5 | 🔎 PR #1240 |
+| S3.2 | Registro de fatura: upload doc + radicado + `fatura.registrada` | Sonnet 5 | S3.1, S0.5 | ✅ #1240 (merge autorizado c/ CI vermelho — OOM de infra; fix na S-CI) |
 | S3.3 | Notas crédito/débito de devoluções | Haiku 4.5 | S3.2, S2.8 | 📋 |
 
 ### Onda 4 — Comercial / Front REP (out → dez)
@@ -97,12 +97,13 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 | # | Item | Onde está | O que destrava |
 |---|---|---|---|
 | 1 | **Executar o dry-run de reservas órfãs** (SKU 1185) | Instruções em comentário na [PR #1238](https://github.com/Sants-M13/Medusa/pull/1238) | Fecha o diagnóstico da reserva presa vista no seu 1º teste |
-| 2 | *(sem ação — só aguardar)* Aviso do merge da #1240 + roteiro de teste do registro de fatura | Chegará aqui no chat (com push) | Teste do ciclo contábil completo |
+| 2 | **Testar o registro de fatura em staging** (#1240 mergeada 11/08 13:41) — Facturación → #121 → "Registrar factura" → PDF + radicado `FEET`+5 dígitos → pedido sai da fila; radicado inválido deve ser rejeitado | Staging (roteiro também em comentário na [PR #1240](https://github.com/Sants-M13/Medusa/pull/1240)) | Fecha o ciclo contábil da fila; feedback alimenta a S3.3 |
 | 3 | *(em breve)* **Decisão do ADR caixa×pares** — a recomendação final chega aqui no chat quando a S0.3 concluir | Rascunho na branch [`claude/adr-caja-pares`](https://github.com/Sants-M13/Medusa/tree/claude/adr-caja-pares) | S2.2 cadastro/grades + modelagem definitiva |
 | ✔ | ~~Revisar a spec da Carteira~~ — **aprovada 11/08** | merge em staging via MR-7 | — |
 | ✔ | ~~Responder Q1 do ADR~~ — **respondida 11/08** (pares = devoluções/garantias revendáveis) | repassada à S0.3 | — |
 
 ## 🔄 Log de coordenação
+- **11/08 (34 — 13:45)** — **#1240 MERGEADA em staging** (autorização CI-vermelho do Bruno; MR-6 postou o roteiro na PR e monitorou o CI pós-merge). Bruno avisado com push — **registro de fatura testável**. Higiene: MR-6 e S3.2 arquivadas; triggers poke da rodada deletados. Em voo: MR-7 (merge spec Carteira), S1.1b (ajustes wallet), S0.3 (ADR final), S-CI (fix OOM). Check-in 14:15 cobre todos.
 - **11/08 (33 — 13:35)** — **Decisão do Bruno (AskUserQuestion): mergear a #1240 no vermelho + consertar o CI em paralelo.** MR-6 re-acionado com a autorização explícita citada (guarda de CI dispensada SÓ para a #1240; demais guardas mantidas) + comentário "como testar" na PR. **S-CI lançada** (Sonnet, branch `claude/ci-memory-fix`, exceção autorizada para tocar workflow): heap/sharding da suite de integração, PR própria validada no próprio CI. Staging CI pode ficar vermelho pelo padrão OOM até o fix mergear — registrado como esperado.
 - **11/08 (32 — 13:30)** — **CI da #1240: OOM/travamento confirmado em 2 re-tentativas** (morre após 8–9 min) — MR-6 manteve o merge bloqueado. Evidências: suite completa verde localmente na S3.2 (109 suites) + diagnóstico de heap OOM postado na PR. Decisão apresentada ao Bruno: (A) autorizar merge no vermelho com evidência documentada, com fix do runner na sequência; (B) consertar o CI primeiro (heap/sharding, toca workflow → precisa de autorização) e só então mergear. Risco registrado: se for a suite crescendo além da memória do runner, o problema volta em TODAS as próximas PRs de código (S1.1b, telas da Carteira, fulfillment).
 - **11/08 (31 — 13:25)** — **Dia grande da Onda 1**: Bruno **aprovou a spec da Carteira** e respondeu a Q1 do ADR — *pares avulsos = devoluções/garantias recebidas, não descartadas, revendidas em pares a clientes selecionados* (nem abertura de caixa selada, nem compra separada). Despachos: **MR-7** (merge da spec, doc-only) · **S1.1b** lançada (Sonnet, branch `claude/wallet-core` — 4 divergências + crédito de devolução 3 destinos; atualiza a #1235) · **S0.3 retomada** via trigger com a resposta e implicações (estoque de pares = secundário, alimentado pelo restock condicional do RMA; conexão com Onda 2.4). Sequência da #1235: após S1.1b entregar, pedir autorização de merge ao Bruno. MR-6 segue no re-run do CI da #1240.
