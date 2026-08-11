@@ -40,7 +40,7 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 |---|---|---|---|---|
 | S0.1 | Spec: máquina de estados + catálogo de eventos (gate configurável `FACTURA_ANTES_DESPACHO`) | Opus 5 | — | ✅ #1231 |
 | S0.2 | Auditoria Medusa v2 em produção (completa) | Sonnet 5 | — | ✅ #1230 |
-| S0.3 | Decisão caixa × pares (ADR com dados reais de venda) | Opus 5 | ✅ + extração Asana | 🔎 PR #1239 — ADR final, **recomendação "Opção A′"** aguardando decisão do Bruno |
+| S0.3 | Decisão caixa × pares (ADR) — **9 decisões fechadas pelo Bruno 11/08** (B2B = caixas + pares de devolução; location "Stock de pares sueltos"; grupo de clientes; produto pai separado; entrada manual auditada; B2C/abertura de caixas = etapa 2) | Opus 5 | ✅ | 🚀 incorporando decisões → merge #1239 |
 | S0.4 | Inventário de controles paralelos (7 controles mapeados) | Haiku 4.5 | — | ✅ #1229 |
 | S0.5 | Spec do registro de fatura (base: fatura real FEET59785; 311 linhas) — via S0.5b | Haiku 4.5 | — | ✅ #1233 |
 | S0.6 | Extração de vendas históricas do Asana — **reatribuída à coordenadora** (conector Asana habilitado no chat; sessão bloqueada em ASANA_PAT arquivada) | Coordenadora (Fable) | conector ✔ | 🔁 10/08 |
@@ -68,13 +68,14 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 | S2.7 | Movimentações + documento de transferência | Sonnet 5 | S2.1 | 📋 |
 | S2.8 | Devoluções & garantias (Returns/Claims + política) | Sonnet 5 | S2.5 | 📋 |
 | S2.9 | Relatórios operacionais | Haiku 4.5 | S2.5 | 📋 |
+| S2.10 | **Pares soltos pós-RMA** (decisões do ADR 11/08): decisão revenda×descarte no aceite da devolução · precificar na hora ou inativo · fila "pares não precificados" · location "Stock de pares sueltos" · customer group "clientes selecionados" (lista da Olga) · condição = dado interno | Sonnet 5 | S2.8, ✅ S0.3 | 📋 |
 
 ### Onda 3 — Contábil (out)
 | ID | Entrega | Modelo | Depende | Status |
 |---|---|---|---|---|
 | S3.1 | Módulo `invoicing`: fila "pendentes de fatura" + notificações + **simulador de separação p/ staging** | Sonnet 5 | ✅ S0.1 | ✅ #1237 |
 | S3.2 | Registro de fatura: upload doc + radicado + `fatura.registrada` | Sonnet 5 | S3.1, S0.5 | ✅ #1240 (merge autorizado c/ CI vermelho — OOM de infra; fix na S-CI) |
-| S3.2c | Ajustes do registro (feedback Bruno 11/08): nº de fatura livre, radicado opcional, máscara COP, pré-preencher valor | Sonnet 5 | ✅ S3.2 | 🚀 11/08 |
+| S3.2c | Ajustes do registro (feedback Bruno 11/08): nº de fatura livre, radicado opcional, máscara COP, pré-preencher valor | Sonnet 5 | ✅ S3.2 | 🔎 PR #1242 (CI verde) |
 | S3.3 | Notas crédito/débito de devoluções | Haiku 4.5 | S3.2, S2.8 | 📋 |
 
 ### Onda 4 — Comercial / Front REP (out → dez)
@@ -98,7 +99,8 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 | # | Item | Onde está | O que destrava |
 |---|---|---|---|
 | 1 | **Executar o dry-run de reservas órfãs** (SKU 1185) | Instruções em comentário na [PR #1238](https://github.com/Sants-M13/Medusa/pull/1238) | Fecha o diagnóstico da reserva presa vista no seu 1º teste |
-| 2 | **Responder os 8 pontos de decisão do ADR** — comentário-decisão postado pela S0.3 com a Opção A′ explicada e recomendação marcada em cada ponto; basta responder "OK em todos" ou apontar divergências (na PR ou aqui) | [Comentário na PR #1239](https://github.com/Sants-M13/Medusa/pull/1239) | Merge do ADR + S2.2 cadastro/grades |
+| 2 | **Autorizar a PR #1242** (seus 4 ajustes do registro de fatura; CI verde) | [PR #1242](https://github.com/Sants-M13/Medusa/pull/1242) | Registro de fatura fica do jeito que você pediu |
+| ✔ | ~~Responder os pontos do ADR~~ — **9 decisões fechadas 11/08** (incorporação em curso → merge) | PR #1239 | — |
 | ✔ | ~~Autorizar a #1241~~ — **mergeada 11/08** (fix do CI em staging) | — | — |
 | ✔ | ~~Testar o registro de fatura~~ — **validado 11/08 15h** (#121 "Factura registrada"); 4 ajustes pedidos → S3.2c | staging | — |
 | 3 | *(em breve)* **Decisão do ADR caixa×pares** — a recomendação final chega aqui no chat quando a S0.3 concluir | Rascunho na branch [`claude/adr-caja-pares`](https://github.com/Sants-M13/Medusa/tree/claude/adr-caja-pares) | S2.2 cadastro/grades + modelagem definitiva |
@@ -106,6 +108,7 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 | ✔ | ~~Responder Q1 do ADR~~ — **respondida 11/08** (pares = devoluções/garantias revendáveis) | repassada à S0.3 | — |
 
 ## 🔄 Log de coordenação
+- **11/08 (39 — 18:35)** — **Bruno fechou as 9 decisões do ADR caixa×pares** (destaques: B2B agora = caixas fechadas + pares de devolução, B2C/abertura de caixas = etapa 2 até fim do ano; location dedicada "Stock de pares sueltos"; decisão revenda×descarte por item no aceite do RMA, com precificação na hora ou produto inativo + fila de não-precificados; condição = dado interno invisível ao cliente; customer group "clientes selecionados" da Olga; produto pai separado p/ par; entrada manual auditada) → S0.3 incorporando na #1239; desdobramentos registrados (nova S2.10; S2.2 desbloqueada). **S3.2c entregou PR #1242 com CI VERDE** (4 ajustes do registro) — apresentada p/ autorização. S1.1b seguiu vaga → **AUX3 lançada** (Haiku, read-only) para retratar a #1235 (CI/ajustes/escopo) antes de pedir autorização. Higiene: triggers de poke antigos deletados.
 - **11/08 (38 — 17:35)** — **#1241 mergeada (MR-8) — fix do CI em staging**; MR-8 e S-CI arquivadas. **S0.3 postou o comentário-decisão na PR #1239: 8 pontos aguardando OK do Bruno** (Opção A′ explicada, recomendação marcada em cada ponto) — Bruno avisado. S1.1b e S3.2c cutucadas via triggers novos: atualizar branches a partir de staging (absorvem o fix de CI), re-rodar CI e reportar status CONCRETO (guideline nova: summary tem que carregar status, não "vou monitorar"). Próximas autorizações previstas: #1235 (wallet) e PR da S3.2c, ambas já com CI confiável. Nota: container da coordenadora reciclado ~16-17h — estado recuperado por fast-forward do remoto, nada perdido (o quadro no GitHub é a fonte da verdade: prática validada).
 - **11/08 (37 — 15:16)** — Bruno **autorizou a #1241** → **MR-8 despachada** (guardas: escopo estrito CI/teste, PR verde, sem squash; pós-merge valida staging CI). Para a #1239: **S0.3 acionada** para postar na PR um comentário-decisão ("Para fechar, preciso do seu OK em: …" com a Opção A′ explicada e a recomendação marcada em cada ponto). Aprendizado operacional registrado: fire_trigger com `text` em trigger reutilizado NÃO entrega à sessão (cse divergente — visto na AUX e agora) → sempre criar trigger novo com o prompt completo.
 - **11/08 (36 — 15:12)** — **Registro de fatura VALIDADO pelo Bruno em staging** (#121 → "Factura registrada"; badge verde na fila; validações do rango DIAN barraram FEET78987 como especificado). Feedback de produto dele (4 ajustes): nº de fatura **livre** (sem formato/faixa nesta fase), radicado **opcional**, **máscara COP** no valor, **pré-preencher** com o total do pedido → **S3.2c lançada** (Sonnet, `claude/invoicing-ajustes-registro`), incluindo atualização da spec REGISTRO_FATURA.md (validações relaxadas por decisão dele; desenho original vira evolução futura). Aguardando dele: autorização da #1241 (fix CI) e decisão do ADR (#1239).
