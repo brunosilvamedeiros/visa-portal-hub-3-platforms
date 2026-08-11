@@ -49,8 +49,8 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 | ID | Entrega | Modelo | Depende | Status |
 |---|---|---|---|---|
 | S1.0 | **Spec consolidada da Carteira** (`docs/specs/CARTEIRA.md`): ledger, estado de conta, comprovantes/conciliação, limite/gate, cutover, APIs, permissões | Opus 5 | specs Fase 0 ✅ | ✅ #1236 (aprovada + mergeada 11/08) |
-| S1.1 | Módulo `wallet`: entidades do ledger + serviços + testes + ajustes da spec (S1.1b: 4 divergências + crédito de devolução 3 destinos) | Sonnet 5 | ✅ S0.1, ✅ S1.0 | 🔎 **#1235 pronta** (CI verde, sincronizada c/ staging, ajustes completos — verificado pela AUX3) → aguardando autorização do Bruno |
-| S1.2 | Estado de conta no admin: extrato, saldo, aging, export | Sonnet 5 | S1.1 | 📋 |
+| S1.1 | Módulo `wallet`: entidades do ledger + serviços + testes + ajustes da spec (S1.1b) | Sonnet 5 | ✅ S0.1, ✅ S1.0 | ✅ #1235 (CI verde) |
+| S1.2 | Estado de conta no admin: extrato, saldo, aging, export CSV, lista de saldos abertos | Sonnet 5 | ✅ S1.1 | 🚀 11/08 |
 | S1.3 | Comprovantes: upload → fila de conciliação → baixa | Sonnet 5 | S1.1 | 📋 |
 | S1.4 | Límite de crédito + gate no checkout + API saldo/limite | Sonnet 5 | S1.1 | 📋 |
 | S1.5 | Cutover da cobrança: plano (Opus) + carga inicial e validação (Sonnet) | Opus → Sonnet | S1.1, S0.4 | 📋 |
@@ -98,13 +98,14 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 
 | # | Item | Onde está | O que destrava |
 |---|---|---|---|
-| 1 | **Autorizar a #1235** (wallet core alinhado à spec da Carteira; CI verde, escopo ok) | [PR #1235](https://github.com/Sants-M13/Medusa/pull/1235) | Ledger em staging → telas S1.2–S1.4 (Onda 1 anda) |
+| ✔ | ~~Autorizar a #1235~~ — **mergeada 11/08 20:29, CI verde** (ledger em staging; testável chega com a S1.2) | — | — |
 | 2 | **Executar o dry-run de reservas órfãs** (SKU 1185) | Instruções em comentário na [PR #1238](https://github.com/Sants-M13/Medusa/pull/1238) | Fecha o diagnóstico da reserva presa vista no seu 1º teste |
 | 3 | **Re-testar o form "Registrar factura"** (#1242 em staging): valor pré-preenchido, máscara de milhar, nº livre, radicado opcional | staging → Facturación | Fecha o feedback de 11/08 |
 
 **Concluídos em 11/08**: spec da Carteira aprovada (#1236 ✅) · Q1 + 9 decisões do ADR fechadas (#1239 → merge em curso) · #1241 fix CI mergeada ✅ · registro de fatura validado (#1240) e ajustes autorizados (#1242 → merge em curso, condição prefill/máscara verificada pelo runner).
 
 ## 🔄 Log de coordenação
+- **11/08 (45 — 20:48)** — **#1235 MERGEADA (MR-11), staging CI VERDE** — a Onda 1 tem seu ledger em produção de staging. **S1.2 lançada** (Sonnet, `claude/wallet-estado-conta`): estado de conta no admin (extrato, saldo, aging, export CSV, lista de saldos abertos), construindo por baixo da "Aprobación de cartera" existente. S2.2 seguiu com resumo vago apesar de ~1h de trabalho pesado → poke com exigência de status concreto (regra registrada nos kickoffs novos: status_detail carrega ESTADO, nunca "vou monitorar"). Painel ativo: S1.2 · S2.2 · S2.3 · S2.6 + coordenadora — 4 frentes paralelas, zero colisão de módulo.
 - **11/08 (44 — 20:35)** — Bruno decidiu: **S2.10 NÃO antecipa** (ordem original, junto das devoluções) e **autorizou nova leva paralela** → lançadas **S2.3** (Opus, spec fulfillment-ops — enriquecida pela extração do Asana feita pela coordenadora: os 5 projetos "Fullfilment" são template + mockups anexados; estrutura do fluxo AS-IS = Validação → Picking → Packing + Filtros + Gerar Guia) e **S2.6** (Sonnet, gate de expedição com flag `FACTURA_ANTES_DESPACHO` — o "não enviar sem faturar" pedido por ele; deps vivas desde #1240). **S0.6 encerrada** (extração concluída; vendas históricas dispensadas pós-ADR). Paralelismo sem colisão: S2.2 (catálogo) · S2.3 (doc) · S2.6 (pedidos/fulfillment) · S1.2 (wallet admin, após MR-11). Correção de status: S4.1 → ✅ #1232 (mergeada em 10/08 pela MR-1; quadro estava desatualizado).
 - **11/08 (43 — 20:30)** — Bruno **autorizou a #1235** → **MR-11 despachada** (wallet core; pós-merge: comentário deixando claro que o testável chega com a S1.2). Bruno testou devolução buscando a opção "pares soltos + preço" → **expectativa alinhada**: não existe ainda (decidida hoje no ADR); S2.2 (em construção) entrega a entrada manual, e a opção dentro do aceite do RMA é a S2.10 — **oferecida antecipação da S2.10 para logo após a S2.2** (RMA nativo já validado no #108 permite pendurar a decisão revenda×descarte sem esperar a S2.8); aguardando resposta dele. Higiene: triggers órfãos deletados; check-in 20:45 armado (confirmar MR-11 → lançar S1.2; status S2.2).
 - **11/08 (42 — 19:25)** — **DUPLO MERGE**: #1239 (ADR-001 caixa×pares, 4 guardas ✔) e #1242 (ajustes do registro; **condições do Bruno verificadas no código pelo runner antes do merge**) em staging. Bruno avisado com push ("tudo pronto para testar"). **S2.2 lançada** (Sonnet, `claude/cadastro-grades`): fundação dos pares soltos conforme ADR — produto pai manual auditado, location "Stock de pares sueltos", customer group, condição interna, fila "Pares sin precio"; integração com RMA fica na S2.10. Higiene: MR-9, MR-10, S3.2c e S0.3 arquivadas. Pendente do Bruno: autorização da **#1235** (wallet, verificada) + re-teste do form + dry-run órfãs.
