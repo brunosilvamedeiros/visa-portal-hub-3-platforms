@@ -40,7 +40,7 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 |---|---|---|---|---|
 | S0.1 | Spec: máquina de estados + catálogo de eventos (gate configurável `FACTURA_ANTES_DESPACHO`) | Opus 5 | — | ✅ #1231 |
 | S0.2 | Auditoria Medusa v2 em produção (completa) | Sonnet 5 | — | ✅ #1230 |
-| S0.3 | Decisão caixa × pares (ADR com dados reais de venda) | Opus 5 | ✅ + extração Asana | 🔎 PR aberta · ⏸️ Q1 p/ Bruno |
+| S0.3 | Decisão caixa × pares (ADR com dados reais de venda) | Opus 5 | ✅ + extração Asana | 🚀 finalizando (Q1 respondida 11/08: pares = devoluções/garantias revendáveis) |
 | S0.4 | Inventário de controles paralelos (7 controles mapeados) | Haiku 4.5 | — | ✅ #1229 |
 | S0.5 | Spec do registro de fatura (base: fatura real FEET59785; 311 linhas) — via S0.5b | Haiku 4.5 | — | ✅ #1233 |
 | S0.6 | Extração de vendas históricas do Asana — **reatribuída à coordenadora** (conector Asana habilitado no chat; sessão bloqueada em ASANA_PAT arquivada) | Coordenadora (Fable) | conector ✔ | 🔁 10/08 |
@@ -48,8 +48,8 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 ### Onda 1 — Carteira (ago S4 → set)
 | ID | Entrega | Modelo | Depende | Status |
 |---|---|---|---|---|
-| S1.0 | **Spec consolidada da Carteira** (`docs/specs/CARTEIRA.md`): ledger, estado de conta, comprovantes/conciliação, limite/gate, cutover, APIs, permissões — p/ revisão do Bruno | Opus 5 | specs Fase 0 ✅ | 🚀 10/08 |
-| S1.1 | Módulo `wallet`: entidades do ledger + serviços + testes | Sonnet 5 | ✅ S0.1 | 🚀 10/08 |
+| S1.0 | **Spec consolidada da Carteira** (`docs/specs/CARTEIRA.md`): ledger, estado de conta, comprovantes/conciliação, limite/gate, cutover, APIs, permissões | Opus 5 | specs Fase 0 ✅ | ✅ **aprovada pelo Bruno 11/08** · merge MR-7 |
+| S1.1 | Módulo `wallet`: entidades do ledger + serviços + testes (PR #1235, segurada) + **S1.1b: ajustes da spec aprovada** (4 divergências + crédito de devolução 3 destinos) | Sonnet 5 | ✅ S0.1, ✅ S1.0 | 🔎 #1235 · S1.1b 🚀 11/08 |
 | S1.2 | Estado de conta no admin: extrato, saldo, aging, export | Sonnet 5 | S1.1 | 📋 |
 | S1.3 | Comprovantes: upload → fila de conciliação → baixa | Sonnet 5 | S1.1 | 📋 |
 | S1.4 | Límite de crédito + gate no checkout + API saldo/limite | Sonnet 5 | S1.1 | 📋 |
@@ -96,12 +96,14 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 
 | # | Item | Onde está | O que destrava |
 |---|---|---|---|
-| 1 | **Revisar a spec da Carteira** (`docs/specs/CARTEIRA.md`) | PR aberta no repo do produto, branch [`claude/spec-carteira`](https://github.com/Sants-M13/Medusa/blob/claude/spec-carteira/docs/specs/CARTEIRA.md) — ver [lista de PRs abertas](https://github.com/Sants-M13/Medusa/pulls) | Merge da #1235 (wallet core) + S1.1b (ajustes) + telas S1.2–S1.4 — a Onda 1 inteira |
-| 2 | **Responder a Q1 do ADR caixa×pares** — *"pares avulsos saem de caixa selada aberta na bodega, ou têm estoque físico separado?"* | Responder **aqui no chat** mesmo; o rascunho do ADR está na branch [`claude/adr-caja-pares`](https://github.com/Sants-M13/Medusa/tree/claude/adr-caja-pares) | Fechamento do ADR (decisão SUA na sequência) + S2.2 cadastro/grades |
-| 3 | **Executar o dry-run de reservas órfãs** (SKU 1185) | Instruções em comentário na [PR #1238](https://github.com/Sants-M13/Medusa/pull/1238) | Fecha o diagnóstico da reserva presa vista no seu 1º teste |
-| 4 | *(sem ação — só aguardar)* Aviso do merge da #1240 + roteiro de teste do registro de fatura | Chegará aqui no chat (com push) | Teste do ciclo contábil completo |
+| 1 | **Executar o dry-run de reservas órfãs** (SKU 1185) | Instruções em comentário na [PR #1238](https://github.com/Sants-M13/Medusa/pull/1238) | Fecha o diagnóstico da reserva presa vista no seu 1º teste |
+| 2 | *(sem ação — só aguardar)* Aviso do merge da #1240 + roteiro de teste do registro de fatura | Chegará aqui no chat (com push) | Teste do ciclo contábil completo |
+| 3 | *(em breve)* **Decisão do ADR caixa×pares** — a recomendação final chega aqui no chat quando a S0.3 concluir | Rascunho na branch [`claude/adr-caja-pares`](https://github.com/Sants-M13/Medusa/tree/claude/adr-caja-pares) | S2.2 cadastro/grades + modelagem definitiva |
+| ✔ | ~~Revisar a spec da Carteira~~ — **aprovada 11/08** | merge em staging via MR-7 | — |
+| ✔ | ~~Responder Q1 do ADR~~ — **respondida 11/08** (pares = devoluções/garantias revendáveis) | repassada à S0.3 | — |
 
 ## 🔄 Log de coordenação
+- **11/08 (31 — 13:25)** — **Dia grande da Onda 1**: Bruno **aprovou a spec da Carteira** e respondeu a Q1 do ADR — *pares avulsos = devoluções/garantias recebidas, não descartadas, revendidas em pares a clientes selecionados* (nem abertura de caixa selada, nem compra separada). Despachos: **MR-7** (merge da spec, doc-only) · **S1.1b** lançada (Sonnet, branch `claude/wallet-core` — 4 divergências + crédito de devolução 3 destinos; atualiza a #1235) · **S0.3 retomada** via trigger com a resposta e implicações (estoque de pares = secundário, alimentado pelo restock condicional do RMA; conexão com Onda 2.4). Sequência da #1235: após S1.1b entregar, pedir autorização de merge ao Bruno. MR-6 segue no re-run do CI da #1240.
 - **11/08 (30 — 12:58)** — **Conector CCR reautorizado pelo Bruno** ("verifique agora") — ficou fora ~12h (o cron fallback local não sobreviveu à reciclagem do container; lição: fallback local não atravessa a noite, preferir retomada manual ou trigger server-side). Pipeline retomado: **MR-6 acordado via trigger** com a missão re-run do CI da #1240 (2 tentativas; falha anterior = heap OOM do runner) → merge autorizado se verde; se OOM persistir, comparar com a base staging e escalar sem merge. Check-in armado 13:25 UTC.
 - **11/08 (29 — 00:45)** — **Diagnóstico do CI da #1240 (S3.2): heap OOM no runner — não é defeito do diff**; diagnóstico postado como comentário na PR. Plano: MR-6 re-executa o CI (2 tentativas) e mergeia se verde (autorização do Bruno segue válida); OOM persistente → comparar com a base staging e escalar sem mergear. **BLOQUEIO OPERACIONAL**: conector claude-code-remote caiu em reautenticação (~00:40) — coordenadora sem alcance às sessões até o Bruno reautorizar nas configurações de conectores do claude.ai. Fallback armado: cron local a cada 17 min retoma o pipeline automaticamente quando o conector voltar.
 - **11/08 (28 — 00:17)** — Check-in: **AUX2 concluiu — comentário com as instruções do dry-run de órfãs postado na PR #1238** (arquivada). S3.2 processou o poke e aguarda o re-run do CI da #1240 (montou timer; curl de monitoramento bloqueado pelo proxy — fallback ativo). MR-6 segue de prontidão para re-executar o merge quando o CI ficar verde. Observação de painel: Bruno tem sessão própria (desktop, "Limpeza de documentação na fila") tratando a PR #1239 (docs-only) com runner próprio — fora da nossa gestão, sem colisão de escopo com a #1240. Próximo check: ~20 min.
