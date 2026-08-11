@@ -43,7 +43,7 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 | S0.3 | Decisão caixa × pares (ADR-001) — **9 decisões fechadas pelo Bruno 11/08** (B2B = caixas + pares de devolução; location "Stock de pares sueltos"; grupo de clientes; produto pai separado; entrada manual auditada; B2C/abertura de caixas = etapa 2) | Opus 5 | ✅ | ✅ #1239 |
 | S0.4 | Inventário de controles paralelos (7 controles mapeados) | Haiku 4.5 | — | ✅ #1229 |
 | S0.5 | Spec do registro de fatura (base: fatura real FEET59785; 311 linhas) — via S0.5b | Haiku 4.5 | — | ✅ #1233 |
-| S0.6 | Extração de vendas históricas do Asana — **reatribuída à coordenadora** (conector Asana habilitado no chat; sessão bloqueada em ASANA_PAT arquivada) | Coordenadora (Fable) | conector ✔ | 🔁 10/08 |
+| S0.6 | Extração do Asana — **concluída 11/08 pela coordenadora**: os 5 projetos "Fullfilment" (84 tarefas) são template de gestão; o conteúdo real são os **mockups anexados** por passo (Validação/Picking/Packing/Filtros/Guia) → estrutura alimentou a S2.3; mockups ficam para a validação da spec com o time. Vendas históricas p/ S0.3: desnecessárias (ADR decidido) | Coordenadora (Fable) | — | ✅ 11/08 |
 
 ### Onda 1 — Carteira (ago S4 → set)
 | ID | Entrega | Modelo | Depende | Status |
@@ -61,10 +61,10 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 |---|---|---|---|---|
 | S2.1 | Config estoque nativo: locations, níveis, reservas (1.405 testes verdes; `FUNDACAO_ESTOQUE.md` com roteiro de validação) | Sonnet 5 | ✅ S0.2 | ✅ #1234 |
 | S2.2 | Cadastro dos pares soltos conforme ADR-001: produto pai a partir da caixa (entrada manual auditada), location "Stock de pares sueltos", customer group, condição interna, preço na hora ou inativo + fila "Pares sin precio" | Sonnet 5 | ✅ S0.3 | 🚀 11/08 |
-| S2.3 | Spec das telas do fulfillment-ops (fila → pick → pack) | Opus 5 | S0.1 | 📋 |
+| S2.3 | Spec das telas do fulfillment-ops (fila → validação → pick → pack → Separado → guia; mapeada às 5 frentes do Asana) | Opus 5 | ✅ S0.1 | 🚀 11/08 |
 | S2.4 | Build: fila + verificar + preparar | Sonnet 5 | S2.3 | 📋 |
 | S2.5 | Build: pick/pack por operador + estado "Separado" + evento | Sonnet 5 | S2.4 | 📋 |
-| S2.6 | Gate de expedição (consome `fatura.registrada`) | Sonnet 5 | S0.1 | 📋 |
+| S2.6 | Gate de expedição (flag `FACTURA_ANTES_DESPACHO`; consome `fatura.registrada` — já vivo via #1240) | Sonnet 5 | ✅ S0.1, ✅ S3.2 | 🚀 11/08 |
 | S2.7 | Movimentações + documento de transferência | Sonnet 5 | S2.1 | 📋 |
 | S2.8 | Devoluções & garantias (Returns/Claims + política) | Sonnet 5 | S2.5 | 📋 |
 | S2.9 | Relatórios operacionais | Haiku 4.5 | S2.5 | 📋 |
@@ -81,7 +81,7 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 ### Onda 4 — Comercial / Front REP (out → dez)
 | ID | Entrega | Modelo | Depende | Status |
 |---|---|---|---|---|
-| S4.1 | Merge autorizado da PR #1228 ✅ (executado) + roteiro de validação com REPs | Haiku 4.5 | — | 🔎 PR #1232 |
+| S4.1 | Merge autorizado da PR #1228 ✅ + roteiro de validação com REPs | Haiku 4.5 | — | ✅ #1232 (validação com 2–3 REPs pendente de agendamento) |
 | S4.2 | Quick wins "Now" do estudo + bug #593 (timeline Facturado) | Sonnet 5 | S4.1 | 📋 |
 | S4.3 | Financeiro no front (saldo/limite/comprovante) | Sonnet 5 | S1.4 | 📋 |
 | S4.4 | Vitrine Infinita: ajustes endless aisle | Sonnet 5 | S4.2 | 📋 |
@@ -105,6 +105,7 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 **Concluídos em 11/08**: spec da Carteira aprovada (#1236 ✅) · Q1 + 9 decisões do ADR fechadas (#1239 → merge em curso) · #1241 fix CI mergeada ✅ · registro de fatura validado (#1240) e ajustes autorizados (#1242 → merge em curso, condição prefill/máscara verificada pelo runner).
 
 ## 🔄 Log de coordenação
+- **11/08 (44 — 20:35)** — Bruno decidiu: **S2.10 NÃO antecipa** (ordem original, junto das devoluções) e **autorizou nova leva paralela** → lançadas **S2.3** (Opus, spec fulfillment-ops — enriquecida pela extração do Asana feita pela coordenadora: os 5 projetos "Fullfilment" são template + mockups anexados; estrutura do fluxo AS-IS = Validação → Picking → Packing + Filtros + Gerar Guia) e **S2.6** (Sonnet, gate de expedição com flag `FACTURA_ANTES_DESPACHO` — o "não enviar sem faturar" pedido por ele; deps vivas desde #1240). **S0.6 encerrada** (extração concluída; vendas históricas dispensadas pós-ADR). Paralelismo sem colisão: S2.2 (catálogo) · S2.3 (doc) · S2.6 (pedidos/fulfillment) · S1.2 (wallet admin, após MR-11). Correção de status: S4.1 → ✅ #1232 (mergeada em 10/08 pela MR-1; quadro estava desatualizado).
 - **11/08 (43 — 20:30)** — Bruno **autorizou a #1235** → **MR-11 despachada** (wallet core; pós-merge: comentário deixando claro que o testável chega com a S1.2). Bruno testou devolução buscando a opção "pares soltos + preço" → **expectativa alinhada**: não existe ainda (decidida hoje no ADR); S2.2 (em construção) entrega a entrada manual, e a opção dentro do aceite do RMA é a S2.10 — **oferecida antecipação da S2.10 para logo após a S2.2** (RMA nativo já validado no #108 permite pendurar a decisão revenda×descarte sem esperar a S2.8); aguardando resposta dele. Higiene: triggers órfãos deletados; check-in 20:45 armado (confirmar MR-11 → lançar S1.2; status S2.2).
 - **11/08 (42 — 19:25)** — **DUPLO MERGE**: #1239 (ADR-001 caixa×pares, 4 guardas ✔) e #1242 (ajustes do registro; **condições do Bruno verificadas no código pelo runner antes do merge**) em staging. Bruno avisado com push ("tudo pronto para testar"). **S2.2 lançada** (Sonnet, `claude/cadastro-grades`): fundação dos pares soltos conforme ADR — produto pai manual auditado, location "Stock de pares sueltos", customer group, condição interna, fila "Pares sin precio"; integração com RMA fica na S2.10. Higiene: MR-9, MR-10, S3.2c e S0.3 arquivadas. Pendente do Bruno: autorização da **#1235** (wallet, verificada) + re-teste do form + dry-run órfãs.
 - **11/08 (41 — 19:18)** — Check-in: **S0.3 concluiu — ADR com as 9 decisões, PR #1239 pronta → MR-9 despachada** (doc-only, guarda verifica presença das decisões). **S3.2c aplicou os refinamentos** (novo commit aeb9f18, checks verdes) → **MR-10 despachada** para a #1242 com guarda extra verificando a condição do Bruno (prefill=value + máscara texto) antes de mergear. **AUX3 confirmou a #1235**: CI verde, sincronizada com staging, ajustes da spec completos → apresentada ao Bruno para autorização (única pendência de autorização restante). Higiene: AUX3 e S1.1b arquivadas; trigger da S1.1b deletado. Ao confirmar os 2 merges: avisar Bruno "tudo pronto para testar" com push.
