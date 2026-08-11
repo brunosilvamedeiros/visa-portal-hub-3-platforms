@@ -74,6 +74,7 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 |---|---|---|---|---|
 | S3.1 | Módulo `invoicing`: fila "pendentes de fatura" + notificações + **simulador de separação p/ staging** | Sonnet 5 | ✅ S0.1 | ✅ #1237 |
 | S3.2 | Registro de fatura: upload doc + radicado + `fatura.registrada` | Sonnet 5 | S3.1, S0.5 | ✅ #1240 (merge autorizado c/ CI vermelho — OOM de infra; fix na S-CI) |
+| S3.2c | Ajustes do registro (feedback Bruno 11/08): nº de fatura livre, radicado opcional, máscara COP, pré-preencher valor | Sonnet 5 | ✅ S3.2 | 🚀 11/08 |
 | S3.3 | Notas crédito/débito de devoluções | Haiku 4.5 | S3.2, S2.8 | 📋 |
 
 ### Onda 4 — Comercial / Front REP (out → dez)
@@ -97,12 +98,14 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 | # | Item | Onde está | O que destrava |
 |---|---|---|---|
 | 1 | **Executar o dry-run de reservas órfãs** (SKU 1185) | Instruções em comentário na [PR #1238](https://github.com/Sants-M13/Medusa/pull/1238) | Fecha o diagnóstico da reserva presa vista no seu 1º teste |
-| 2 | **Testar o registro de fatura em staging** (#1240 mergeada 11/08 13:41) — Facturación → #121 → "Registrar factura" → PDF + radicado `FEET`+5 dígitos → pedido sai da fila; radicado inválido deve ser rejeitado | Staging (roteiro também em comentário na [PR #1240](https://github.com/Sants-M13/Medusa/pull/1240)) | Fecha o ciclo contábil da fila; feedback alimenta a S3.3 |
+| 2 | **Autorizar a #1241** (fix do CI OOM — PR com CI verde) | [PR #1241](https://github.com/Sants-M13/Medusa/pull/1241) | Normaliza a guarda de CI p/ todas as próximas PRs |
+| ✔ | ~~Testar o registro de fatura~~ — **validado 11/08 15h** (#121 "Factura registrada"); 4 ajustes pedidos → S3.2c | staging | — |
 | 3 | *(em breve)* **Decisão do ADR caixa×pares** — a recomendação final chega aqui no chat quando a S0.3 concluir | Rascunho na branch [`claude/adr-caja-pares`](https://github.com/Sants-M13/Medusa/tree/claude/adr-caja-pares) | S2.2 cadastro/grades + modelagem definitiva |
 | ✔ | ~~Revisar a spec da Carteira~~ — **aprovada 11/08** | merge em staging via MR-7 | — |
 | ✔ | ~~Responder Q1 do ADR~~ — **respondida 11/08** (pares = devoluções/garantias revendáveis) | repassada à S0.3 | — |
 
 ## 🔄 Log de coordenação
+- **11/08 (36 — 15:12)** — **Registro de fatura VALIDADO pelo Bruno em staging** (#121 → "Factura registrada"; badge verde na fila; validações do rango DIAN barraram FEET78987 como especificado). Feedback de produto dele (4 ajustes): nº de fatura **livre** (sem formato/faixa nesta fase), radicado **opcional**, **máscara COP** no valor, **pré-preencher** com o total do pedido → **S3.2c lançada** (Sonnet, `claude/invoicing-ajustes-registro`), incluindo atualização da spec REGISTRO_FATURA.md (validações relaxadas por decisão dele; desenho original vira evolução futura). Aguardando dele: autorização da #1241 (fix CI) e decisão do ADR (#1239).
 - **11/08 (35 — 14:20)** — Check-in 14:15: **spec da Carteira mergeada (#1236, MR-7 arquivada)** ✔ · **S-CI entregou PR #1241 com CI VERDE** (fix do OOM validado no próprio CI — apresentada ao Bruno p/ autorização; mergear também re-valida staging) · **S0.3 finalizou o ADR na PR #1239 com recomendação "Opção A′"** — decisão do Bruno pendente (resumo operacional a extrair; leitura direta na PR) · **S1.1b** aplicou ajustes e vigia o CI da #1235 (confirmar suite antes de pedir autorização). Nota: conector CCR oscilando forte (~14:15-14:25) — pokes de detalhe adiados. Esclarecido: PR #1239 era o ADR (a sessão desktop do Bruno tentou tratá-la ontem como doc-cleanup; não mergeou — agora ela é decisão formal, não limpeza).
 - **11/08 (34 — 13:45)** — **#1240 MERGEADA em staging** (autorização CI-vermelho do Bruno; MR-6 postou o roteiro na PR e monitorou o CI pós-merge). Bruno avisado com push — **registro de fatura testável**. Higiene: MR-6 e S3.2 arquivadas; triggers poke da rodada deletados. Em voo: MR-7 (merge spec Carteira), S1.1b (ajustes wallet), S0.3 (ADR final), S-CI (fix OOM). Check-in 14:15 cobre todos.
 - **11/08 (33 — 13:35)** — **Decisão do Bruno (AskUserQuestion): mergear a #1240 no vermelho + consertar o CI em paralelo.** MR-6 re-acionado com a autorização explícita citada (guarda de CI dispensada SÓ para a #1240; demais guardas mantidas) + comentário "como testar" na PR. **S-CI lançada** (Sonnet, branch `claude/ci-memory-fix`, exceção autorizada para tocar workflow): heap/sharding da suite de integração, PR própria validada no próprio CI. Staging CI pode ficar vermelho pelo padrão OOM até o fix mergear — registrado como esperado.
