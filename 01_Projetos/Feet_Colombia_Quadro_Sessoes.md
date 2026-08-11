@@ -40,7 +40,7 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 |---|---|---|---|---|
 | S0.1 | Spec: máquina de estados + catálogo de eventos (gate configurável `FACTURA_ANTES_DESPACHO`) | Opus 5 | — | ✅ #1231 |
 | S0.2 | Auditoria Medusa v2 em produção (completa) | Sonnet 5 | — | ✅ #1230 |
-| S0.3 | Decisão caixa × pares (ADR) — **9 decisões fechadas pelo Bruno 11/08** (B2B = caixas + pares de devolução; location "Stock de pares sueltos"; grupo de clientes; produto pai separado; entrada manual auditada; B2C/abertura de caixas = etapa 2) | Opus 5 | ✅ | 🚀 incorporando decisões → merge #1239 |
+| S0.3 | Decisão caixa × pares (ADR-001) — **9 decisões fechadas pelo Bruno 11/08** (B2B = caixas + pares de devolução; location "Stock de pares sueltos"; grupo de clientes; produto pai separado; entrada manual auditada; B2C/abertura de caixas = etapa 2) | Opus 5 | ✅ | ✅ #1239 |
 | S0.4 | Inventário de controles paralelos (7 controles mapeados) | Haiku 4.5 | — | ✅ #1229 |
 | S0.5 | Spec do registro de fatura (base: fatura real FEET59785; 311 linhas) — via S0.5b | Haiku 4.5 | — | ✅ #1233 |
 | S0.6 | Extração de vendas históricas do Asana — **reatribuída à coordenadora** (conector Asana habilitado no chat; sessão bloqueada em ASANA_PAT arquivada) | Coordenadora (Fable) | conector ✔ | 🔁 10/08 |
@@ -60,7 +60,7 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 | ID | Entrega | Modelo | Depende | Status |
 |---|---|---|---|---|
 | S2.1 | Config estoque nativo: locations, níveis, reservas (1.405 testes verdes; `FUNDACAO_ESTOQUE.md` com roteiro de validação) | Sonnet 5 | ✅ S0.2 | ✅ #1234 |
-| S2.2 | Cadastro/grades + import (modelagem aplicada) | Sonnet 5 | S0.3 | 📋 |
+| S2.2 | Cadastro dos pares soltos conforme ADR-001: produto pai a partir da caixa (entrada manual auditada), location "Stock de pares sueltos", customer group, condição interna, preço na hora ou inativo + fila "Pares sin precio" | Sonnet 5 | ✅ S0.3 | 🚀 11/08 |
 | S2.3 | Spec das telas do fulfillment-ops (fila → pick → pack) | Opus 5 | S0.1 | 📋 |
 | S2.4 | Build: fila + verificar + preparar | Sonnet 5 | S2.3 | 📋 |
 | S2.5 | Build: pick/pack por operador + estado "Separado" + evento | Sonnet 5 | S2.4 | 📋 |
@@ -75,7 +75,7 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 |---|---|---|---|---|
 | S3.1 | Módulo `invoicing`: fila "pendentes de fatura" + notificações + **simulador de separação p/ staging** | Sonnet 5 | ✅ S0.1 | ✅ #1237 |
 | S3.2 | Registro de fatura: upload doc + radicado + `fatura.registrada` | Sonnet 5 | S3.1, S0.5 | ✅ #1240 (merge autorizado c/ CI vermelho — OOM de infra; fix na S-CI) |
-| S3.2c | Ajustes do registro (feedback Bruno 11/08): nº de fatura livre, radicado opcional, máscara COP, pré-preencher valor | Sonnet 5 | ✅ S3.2 | 🔎 PR #1242 (CI verde) |
+| S3.2c | Ajustes do registro (feedback Bruno 11/08): nº de fatura livre, radicado opcional, máscara COP, valor pré-preenchido como value | Sonnet 5 | ✅ S3.2 | ✅ #1242 (condições verificadas no merge) |
 | S3.3 | Notas crédito/débito de devoluções | Haiku 4.5 | S3.2, S2.8 | 📋 |
 
 ### Onda 4 — Comercial / Front REP (out → dez)
@@ -100,11 +100,12 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 |---|---|---|---|
 | 1 | **Autorizar a #1235** (wallet core alinhado à spec da Carteira; CI verde, escopo ok) | [PR #1235](https://github.com/Sants-M13/Medusa/pull/1235) | Ledger em staging → telas S1.2–S1.4 (Onda 1 anda) |
 | 2 | **Executar o dry-run de reservas órfãs** (SKU 1185) | Instruções em comentário na [PR #1238](https://github.com/Sants-M13/Medusa/pull/1238) | Fecha o diagnóstico da reserva presa vista no seu 1º teste |
-| 3 | *(sem ação — aguardar push)* Re-teste do form "Registrar factura" quando a #1242 mergear | staging | — |
+| 3 | **Re-testar o form "Registrar factura"** (#1242 em staging): valor pré-preenchido, máscara de milhar, nº livre, radicado opcional | staging → Facturación | Fecha o feedback de 11/08 |
 
 **Concluídos em 11/08**: spec da Carteira aprovada (#1236 ✅) · Q1 + 9 decisões do ADR fechadas (#1239 → merge em curso) · #1241 fix CI mergeada ✅ · registro de fatura validado (#1240) e ajustes autorizados (#1242 → merge em curso, condição prefill/máscara verificada pelo runner).
 
 ## 🔄 Log de coordenação
+- **11/08 (42 — 19:25)** — **DUPLO MERGE**: #1239 (ADR-001 caixa×pares, 4 guardas ✔) e #1242 (ajustes do registro; **condições do Bruno verificadas no código pelo runner antes do merge**) em staging. Bruno avisado com push ("tudo pronto para testar"). **S2.2 lançada** (Sonnet, `claude/cadastro-grades`): fundação dos pares soltos conforme ADR — produto pai manual auditado, location "Stock de pares sueltos", customer group, condição interna, fila "Pares sin precio"; integração com RMA fica na S2.10. Higiene: MR-9, MR-10, S3.2c e S0.3 arquivadas. Pendente do Bruno: autorização da **#1235** (wallet, verificada) + re-teste do form + dry-run órfãs.
 - **11/08 (41 — 19:18)** — Check-in: **S0.3 concluiu — ADR com as 9 decisões, PR #1239 pronta → MR-9 despachada** (doc-only, guarda verifica presença das decisões). **S3.2c aplicou os refinamentos** (novo commit aeb9f18, checks verdes) → **MR-10 despachada** para a #1242 com guarda extra verificando a condição do Bruno (prefill=value + máscara texto) antes de mergear. **AUX3 confirmou a #1235**: CI verde, sincronizada com staging, ajustes da spec completos → apresentada ao Bruno para autorização (única pendência de autorização restante). Higiene: AUX3 e S1.1b arquivadas; trigger da S1.1b deletado. Ao confirmar os 2 merges: avisar Bruno "tudo pronto para testar" com push.
 - **11/08 (40 — 19:25)** — Bruno testou o form em staging (ainda pré-#1242) e refinou 2 requisitos da #1242: **valor pré-preenchido como VALUE editável** (não placeholder cinza) e **máscara real de milhar** (input texto formatado, não type=number com spinner). Em seguida **autorizou o merge da #1242 condicionado aos ajustes** ("pode fazer merge com os ajustes"). Conector CCR caiu no momento do despacho → retentativa automática armada (cron local 4/4 min): poke na S3.2c com os 2 refinamentos → quando ela reportar ✔✔ + CI verde, merge-runner executa sem nova consulta (autorização condicionada registrada aqui). Fila do Bruno segue: dry-run órfãs; ADR em incorporação (merge na sequência); #1235 aguardando retrato da AUX3.
 - **11/08 (39 — 18:35)** — **Bruno fechou as 9 decisões do ADR caixa×pares** (destaques: B2B agora = caixas fechadas + pares de devolução, B2C/abertura de caixas = etapa 2 até fim do ano; location dedicada "Stock de pares sueltos"; decisão revenda×descarte por item no aceite do RMA, com precificação na hora ou produto inativo + fila de não-precificados; condição = dado interno invisível ao cliente; customer group "clientes selecionados" da Olga; produto pai separado p/ par; entrada manual auditada) → S0.3 incorporando na #1239; desdobramentos registrados (nova S2.10; S2.2 desbloqueada). **S3.2c entregou PR #1242 com CI VERDE** (4 ajustes do registro) — apresentada p/ autorização. S1.1b seguiu vaga → **AUX3 lançada** (Haiku, read-only) para retratar a #1235 (CI/ajustes/escopo) antes de pedir autorização. Higiene: triggers de poke antigos deletados.
