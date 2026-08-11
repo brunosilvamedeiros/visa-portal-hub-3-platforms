@@ -40,7 +40,7 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 |---|---|---|---|---|
 | S0.1 | Spec: máquina de estados + catálogo de eventos (gate configurável `FACTURA_ANTES_DESPACHO`) | Opus 5 | — | ✅ #1231 |
 | S0.2 | Auditoria Medusa v2 em produção (completa) | Sonnet 5 | — | ✅ #1230 |
-| S0.3 | Decisão caixa × pares (ADR com dados reais de venda) | Opus 5 | ✅ + extração Asana | 🚀 finalizando (Q1 respondida 11/08: pares = devoluções/garantias revendáveis) |
+| S0.3 | Decisão caixa × pares (ADR com dados reais de venda) | Opus 5 | ✅ + extração Asana | 🔎 PR #1239 — ADR final, **recomendação "Opção A′"** aguardando decisão do Bruno |
 | S0.4 | Inventário de controles paralelos (7 controles mapeados) | Haiku 4.5 | — | ✅ #1229 |
 | S0.5 | Spec do registro de fatura (base: fatura real FEET59785; 311 linhas) — via S0.5b | Haiku 4.5 | — | ✅ #1233 |
 | S0.6 | Extração de vendas históricas do Asana — **reatribuída à coordenadora** (conector Asana habilitado no chat; sessão bloqueada em ASANA_PAT arquivada) | Coordenadora (Fable) | conector ✔ | 🔁 10/08 |
@@ -48,7 +48,7 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 ### Onda 1 — Carteira (ago S4 → set)
 | ID | Entrega | Modelo | Depende | Status |
 |---|---|---|---|---|
-| S1.0 | **Spec consolidada da Carteira** (`docs/specs/CARTEIRA.md`): ledger, estado de conta, comprovantes/conciliação, limite/gate, cutover, APIs, permissões | Opus 5 | specs Fase 0 ✅ | ✅ **aprovada pelo Bruno 11/08** · merge MR-7 |
+| S1.0 | **Spec consolidada da Carteira** (`docs/specs/CARTEIRA.md`): ledger, estado de conta, comprovantes/conciliação, limite/gate, cutover, APIs, permissões | Opus 5 | specs Fase 0 ✅ | ✅ #1236 (aprovada + mergeada 11/08) |
 | S1.1 | Módulo `wallet`: entidades do ledger + serviços + testes (PR #1235, segurada) + **S1.1b: ajustes da spec aprovada** (4 divergências + crédito de devolução 3 destinos) | Sonnet 5 | ✅ S0.1, ✅ S1.0 | 🔎 #1235 · S1.1b 🚀 11/08 |
 | S1.2 | Estado de conta no admin: extrato, saldo, aging, export | Sonnet 5 | S1.1 | 📋 |
 | S1.3 | Comprovantes: upload → fila de conciliação → baixa | Sonnet 5 | S1.1 | 📋 |
@@ -103,6 +103,7 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 | ✔ | ~~Responder Q1 do ADR~~ — **respondida 11/08** (pares = devoluções/garantias revendáveis) | repassada à S0.3 | — |
 
 ## 🔄 Log de coordenação
+- **11/08 (35 — 14:20)** — Check-in 14:15: **spec da Carteira mergeada (#1236, MR-7 arquivada)** ✔ · **S-CI entregou PR #1241 com CI VERDE** (fix do OOM validado no próprio CI — apresentada ao Bruno p/ autorização; mergear também re-valida staging) · **S0.3 finalizou o ADR na PR #1239 com recomendação "Opção A′"** — decisão do Bruno pendente (resumo operacional a extrair; leitura direta na PR) · **S1.1b** aplicou ajustes e vigia o CI da #1235 (confirmar suite antes de pedir autorização). Nota: conector CCR oscilando forte (~14:15-14:25) — pokes de detalhe adiados. Esclarecido: PR #1239 era o ADR (a sessão desktop do Bruno tentou tratá-la ontem como doc-cleanup; não mergeou — agora ela é decisão formal, não limpeza).
 - **11/08 (34 — 13:45)** — **#1240 MERGEADA em staging** (autorização CI-vermelho do Bruno; MR-6 postou o roteiro na PR e monitorou o CI pós-merge). Bruno avisado com push — **registro de fatura testável**. Higiene: MR-6 e S3.2 arquivadas; triggers poke da rodada deletados. Em voo: MR-7 (merge spec Carteira), S1.1b (ajustes wallet), S0.3 (ADR final), S-CI (fix OOM). Check-in 14:15 cobre todos.
 - **11/08 (33 — 13:35)** — **Decisão do Bruno (AskUserQuestion): mergear a #1240 no vermelho + consertar o CI em paralelo.** MR-6 re-acionado com a autorização explícita citada (guarda de CI dispensada SÓ para a #1240; demais guardas mantidas) + comentário "como testar" na PR. **S-CI lançada** (Sonnet, branch `claude/ci-memory-fix`, exceção autorizada para tocar workflow): heap/sharding da suite de integração, PR própria validada no próprio CI. Staging CI pode ficar vermelho pelo padrão OOM até o fix mergear — registrado como esperado.
 - **11/08 (32 — 13:30)** — **CI da #1240: OOM/travamento confirmado em 2 re-tentativas** (morre após 8–9 min) — MR-6 manteve o merge bloqueado. Evidências: suite completa verde localmente na S3.2 (109 suites) + diagnóstico de heap OOM postado na PR. Decisão apresentada ao Bruno: (A) autorizar merge no vermelho com evidência documentada, com fix do runner na sequência; (B) consertar o CI primeiro (heap/sharding, toca workflow → precisa de autorização) e só então mergear. Risco registrado: se for a suite crescendo além da memória do runner, o problema volta em TODAS as próximas PRs de código (S1.1b, telas da Carteira, fulfillment).
