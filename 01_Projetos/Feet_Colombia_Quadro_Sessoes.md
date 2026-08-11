@@ -50,7 +50,7 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 |---|---|---|---|---|
 | S1.0 | **Spec consolidada da Carteira** (`docs/specs/CARTEIRA.md`): ledger, estado de conta, comprovantes/conciliação, limite/gate, cutover, APIs, permissões | Opus 5 | specs Fase 0 ✅ | ✅ #1236 (aprovada + mergeada 11/08) |
 | S1.1 | Módulo `wallet`: entidades do ledger + serviços + testes + ajustes da spec (S1.1b) | Sonnet 5 | ✅ S0.1, ✅ S1.0 | ✅ #1235 (CI verde) |
-| S1.2 | Estado de conta no admin: extrato, saldo, aging, export CSV, lista de saldos abertos | Sonnet 5 | ✅ S1.1 | 🚀 11/08 |
+| S1.2 | Estado de conta no admin: extrato, saldo, aging, export CSV, lista de saldos abertos | Sonnet 5 | ✅ S1.1 | ✅ #1246 |
 | S1.3 | Comprovantes: upload → fila de conciliação → baixa | Sonnet 5 | S1.1 | 📋 |
 | S1.4 | Límite de crédito + gate no checkout + API saldo/limite | Sonnet 5 | S1.1 | 📋 |
 | S1.5 | Cutover da cobrança: plano (Opus) + carga inicial e validação (Sonnet) | Opus → Sonnet | S1.1, S0.4 | 📋 |
@@ -60,11 +60,11 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 | ID | Entrega | Modelo | Depende | Status |
 |---|---|---|---|---|
 | S2.1 | Config estoque nativo: locations, níveis, reservas (1.405 testes verdes; `FUNDACAO_ESTOQUE.md` com roteiro de validação) | Sonnet 5 | ✅ S0.2 | ✅ #1234 |
-| S2.2 | Cadastro dos pares soltos conforme ADR-001: produto pai a partir da caixa (entrada manual auditada), location "Stock de pares sueltos", customer group, condição interna, preço na hora ou inativo + fila "Pares sin precio" | Sonnet 5 | ✅ S0.3 | 🚀 11/08 |
+| S2.2 | Cadastro dos pares soltos conforme ADR-001: produto pai a partir da caixa (entrada manual auditada), location "Stock de pares sueltos", customer group, condição interna, preço na hora ou inativo + fila "Pares sin precio" | Sonnet 5 | ✅ S0.3 | ✅ #1243 |
 | S2.3 | Spec das telas do fulfillment-ops (fila → validação → pick → pack → Separado → guia; mapeada às 5 frentes do Asana) | Opus 5 | ✅ S0.1 | 🚀 11/08 |
 | S2.4 | Build: fila + verificar + preparar | Sonnet 5 | S2.3 | 📋 |
 | S2.5 | Build: pick/pack por operador + estado "Separado" + evento | Sonnet 5 | S2.4 | 📋 |
-| S2.6 | Gate de expedição (flag `FACTURA_ANTES_DESPACHO`; consome `fatura.registrada` — já vivo via #1240) | Sonnet 5 | ✅ S0.1, ✅ S3.2 | 🚀 11/08 |
+| S2.6 | Gate de expedição (flag `FACTURA_ANTES_DESPACHO`; consome `fatura.registrada`) | Sonnet 5 | ✅ S0.1, ✅ S3.2 | ✅ #1245 |
 | S2.7 | Movimentações + documento de transferência (acessível ao perfil "logística" — decisão D2 de 11/08) | Sonnet 5 | ✅ S2.1 | 📋 |
 | S2.8 | Devoluções & garantias (Returns/Claims + política) | Sonnet 5 | S2.5 | 📋 |
 | S2.9 | Relatórios operacionais | Haiku 4.5 | S2.5 | 📋 |
@@ -98,13 +98,14 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 
 | # | Item | Onde está | O que destrava |
 |---|---|---|---|
-| 1 | **Autorizar o lote de 3 PRs** (todas CI verde, escopo verificado pela AUX4): [#1245](https://github.com/Sants-M13/Medusa/pull/1245) gate de envio · [#1246](https://github.com/Sants-M13/Medusa/pull/1246) estado de conta da Carteira · [#1243](https://github.com/Sants-M13/Medusa/pull/1243) cadastro de pares soltos | PRs no repo do produto | 3 features testáveis de uma vez |
+| 1 | **Testar as 3 novas em staging**: (a) gate — pedido sem fatura não deixa "Marcar como enviado"; (b) estado de conta — menu Carteira: saldos, extrato, aging, CSV; (c) pares — criar par de uma caixa, ver "Stock de pares sueltos" e fila "Pares sin precio" | staging (mergeadas 22:30-22:36) | Valida Onda 1 visível + gate M2 + ADR na prática |
 | 2 | **Executar o dry-run de reservas órfãs** (SKU 1185) | Instruções em comentário na [PR #1238](https://github.com/Sants-M13/Medusa/pull/1238) | Fecha o diagnóstico da reserva presa vista no seu 1º teste |
 | 3 | **Re-testar o form "Registrar factura"** (#1242 em staging): valor pré-preenchido, máscara de milhar, nº livre, radicado opcional | staging → Facturación | Fecha o feedback de 11/08 |
 
 **Concluídos em 11/08**: spec Carteira #1236 ✅ · ADR #1239 ✅ (9 decisões) · fix CI #1241 ✅ · registro de fatura #1240 ✅ + ajustes #1242 ✅ · wallet core #1235 ✅ · decisões D1/D2/D7 da spec fulfillment fechadas.
 
 ## 🔄 Log de coordenação
+- **11/08 (49 — 22:50)** — **LOTE MERGEADO: #1245 (gate), #1246 (estado de conta), #1243 (pares)** — MR-13/14 confirmaram; MR-12 mergeou e travou apenas num pedido de permissão para agendar a própria checagem de CI (send_later não liberado p/ runners — lição: runners não devem usar send_later; a coordenadora verifica). Bruno avisado com push + 3 roteiros. Higiene pesada: MR-12/13/14 + S1.2 + S2.6 + S2.2 arquivadas. **Placar do dia: 9 PRs mergeadas** (#1235/36/39/40/41/42/43/45/46). Restam ativas: S2.3 (spec fulfillment, finalizando) + coordenadora. Confirmação do CI de staging pós-lote fica no check-in 23:08 junto com S2.3.
 - **11/08 (48 — 22:30)** — Bruno **autorizou as 3 do lote** → MR-12 (#1245 gate), MR-13 (#1246 estado de conta) e MR-14 (#1243 cadastro de pares) despachadas em paralelo, com guardas de escopo por PR e escalonamento anti-conflito na base (0/2/4 min). Ao confirmar: push com os 3 roteiros de teste. Check-in curto armado para confirmar; o das 23:08 segue para S2.3/limpezas.
 - **11/08 (47 — 22:12)** — **Lote de autorização apresentado ao Bruno (push enviado)**: #1245 (gate de envio: flag `FACTURA_ANTES_DESPACHO`, backend+storefront), #1246 (estado de conta: lista de saldos + extrato/aging + CSV), #1243 (cadastro de pares: produto pai + location + customer group + fila "Pares sin precio") — **todas CI verde, escopo limpo, verificadas pela AUX4** (arquivada). S2.3 segue lapidando a spec (validando comportamento do fulfillment nativo antes de fechar — Opus minucioso; sem poke por ora, ~40 min de trabalho é normal para spec estruturante). Check-in 22:19 antigo vai disparar redundante.
 - **11/08 (46 — 21:22)** — **Entrega em rajada das 4 frentes**: S1.2 → PR #1246 (estado de conta: lista de saldos + extrato/aging + CSV) · S2.6 → PR #1245 (gate, backend+storefront) · S2.2 → CI verde (nº da PR a confirmar) · S2.3 → spec completa com 3 decisões. **Bruno respondeu as 3 na hora**: D1 = mesma estrutura de dados, incrementada; tela única operada pelo time de logística · D2 = admin faz tudo + perfil "logística" (fila de pedidos em aberto; acesso também a transferências/recebimento → integra S2.7) · D7 = modo estrito LIGADO desde staging e em prod. Decisões repassadas à S2.3 (incorporar → PR pronta p/ merge). Próximo: lote de autorização (#1245, #1246, spec S2.3, PR da S2.2) quando CI confirmado.
