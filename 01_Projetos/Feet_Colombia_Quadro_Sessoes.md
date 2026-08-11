@@ -92,6 +92,15 @@ Gestão das sessões de trabalho do roadmap [Feet Colombia 2026](./Feet_Colombia
 > Contratos: respeitar `docs/specs/pedidos/ESTADOS_E_EVENTOS.md` (quando existir).
 > Reporte: memória `wip-<id>` + resumo de 5 linhas para `session_01788oWZpqogkqDe2bFh24da`.
 
+## 📥 Fila do Bruno (aguardando decisão/ação dele — atualizada pela coordenadora)
+
+| # | Item | Onde está | O que destrava |
+|---|---|---|---|
+| 1 | **Revisar a spec da Carteira** (`docs/specs/CARTEIRA.md`) | PR aberta no repo do produto, branch [`claude/spec-carteira`](https://github.com/Sants-M13/Medusa/blob/claude/spec-carteira/docs/specs/CARTEIRA.md) — ver [lista de PRs abertas](https://github.com/Sants-M13/Medusa/pulls) | Merge da #1235 (wallet core) + S1.1b (ajustes) + telas S1.2–S1.4 — a Onda 1 inteira |
+| 2 | **Responder a Q1 do ADR caixa×pares** — *"pares avulsos saem de caixa selada aberta na bodega, ou têm estoque físico separado?"* | Responder **aqui no chat** mesmo; o rascunho do ADR está na branch [`claude/adr-caja-pares`](https://github.com/Sants-M13/Medusa/tree/claude/adr-caja-pares) | Fechamento do ADR (decisão SUA na sequência) + S2.2 cadastro/grades |
+| 3 | **Executar o dry-run de reservas órfãs** (SKU 1185) | Instruções em comentário na [PR #1238](https://github.com/Sants-M13/Medusa/pull/1238) | Fecha o diagnóstico da reserva presa vista no seu 1º teste |
+| 4 | *(sem ação — só aguardar)* Aviso do merge da #1240 + roteiro de teste do registro de fatura | Chegará aqui no chat (com push) | Teste do ciclo contábil completo |
+
 ## 🔄 Log de coordenação
 - **11/08 (30 — 12:58)** — **Conector CCR reautorizado pelo Bruno** ("verifique agora") — ficou fora ~12h (o cron fallback local não sobreviveu à reciclagem do container; lição: fallback local não atravessa a noite, preferir retomada manual ou trigger server-side). Pipeline retomado: **MR-6 acordado via trigger** com a missão re-run do CI da #1240 (2 tentativas; falha anterior = heap OOM do runner) → merge autorizado se verde; se OOM persistir, comparar com a base staging e escalar sem merge. Check-in armado 13:25 UTC.
 - **11/08 (29 — 00:45)** — **Diagnóstico do CI da #1240 (S3.2): heap OOM no runner — não é defeito do diff**; diagnóstico postado como comentário na PR. Plano: MR-6 re-executa o CI (2 tentativas) e mergeia se verde (autorização do Bruno segue válida); OOM persistente → comparar com a base staging e escalar sem mergear. **BLOQUEIO OPERACIONAL**: conector claude-code-remote caiu em reautenticação (~00:40) — coordenadora sem alcance às sessões até o Bruno reautorizar nas configurações de conectores do claude.ai. Fallback armado: cron local a cada 17 min retoma o pipeline automaticamente quando o conector voltar.
