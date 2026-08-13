@@ -3,7 +3,7 @@ id: proj-feet-01-sessoes
 cliente: Feet Colombia
 titulo: Quadro de Sessões — Execução do Roadmap 2026
 status: Em Execucao
-gerente: Bruno (fuso UTC-5 / Colômbia — converter antes de assumir "noite"; push liberado em horário comercial dele)
+gerente: Bruno (fuso UTC-5 / Colômbia — converter antes de assumir "noite"; push liberado em horário comercial dele. **REGRA 13/08: TODO horário comunicado ao Bruno vai em hora da Colômbia (UTC-5, sem horário de verão)** — logs internos do quadro podem seguir em UTC com a conversão quando citados no chat)
 coordenadora: session_01RoFGD36avWwfWqtqQemK5N (4ª geração desde 13/08 19:25 UTC; sucede session_01FqdKXTE6PExMagMfUPCSUc — regra de sucessão aos ~50% de contexto)
 repo_produto: https://github.com/Sants-M13/Medusa (base: staging)
 data_inicio: 2026-08-10
