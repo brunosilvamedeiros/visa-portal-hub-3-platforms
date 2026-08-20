@@ -49,7 +49,9 @@ tags: [feet-colombia, bpmn, fulfillment, devolucoes, aderencia, gaps]
 | **Informa créditos gerados e como utilizar** | ❌ **GAP D3** | Notificação do crédito ao cliente não existe |
 | Cliente recebe créditos | ✅ | Visível no estado de conta (front do cliente = Onda 4.3) |
 
-## 3. Gaps consolidados e priorização (decisão do Bruno pendente)
+## 3. Gaps consolidados e priorização — DECIDIDA PELO BRUNO 20/08 ~13:20 Colômbia
+
+> **Decisão**: "foco em finalizar o fulfillment perfeitamente; depois matamos o fluxo de devolução de acordo ao que necessitamos" → **F1 despachada 20/08 (S-FULFIL-PARCIAL)** · D2/D3 adiados (aguardam o redesenho da devolução dirigido pelo Bruno) · F2/D1 seguem Onda 4.
 
 | # | Gap | Porte | Sugestão da coordenação |
 |---|---|---|---|
